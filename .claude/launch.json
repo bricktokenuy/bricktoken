@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "bricktoken-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/Users/enriquezerbino/.local/share/fnm/node-versions/v22.22.2/installation/bin/node",
+      "runtimeArgs": ["node_modules/.bin/next", "dev", "--webpack"],
       "port": 3000
     }
   ]
