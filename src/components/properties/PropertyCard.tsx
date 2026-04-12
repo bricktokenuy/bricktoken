@@ -19,7 +19,7 @@ export function PropertyCard({ property }: { property: Property }) {
             <PropertyIcon type={property.property_type} />
           </div>
           <div className="absolute left-3 top-3 flex gap-2">
-            <Badge className={getStatusColor(property.status)}>
+            <Badge className="bg-gold/90 text-navy font-semibold">
               {getStatusLabel(property.status)}
             </Badge>
           </div>
@@ -64,13 +64,13 @@ export function PropertyCard({ property }: { property: Property }) {
             </div>
             <div className="text-right">
               <p className="text-xs text-slate-400">Desde</p>
-              <p className="text-lg font-semibold text-blue-600">{formatUSD(property.token_price)}</p>
+              <p className="text-lg font-semibold text-gold">{formatUSD(property.token_price)}</p>
             </div>
           </div>
 
           {/* Yield */}
           {property.annual_yield_pct > 0 && (
-            <div className="mt-3 flex items-center gap-1.5 text-sm font-medium text-blue-600">
+            <div className="mt-3 flex items-center gap-1.5 text-sm font-medium text-gold">
               <TrendingUp className="h-3.5 w-3.5" />
               {formatPercent(property.annual_yield_pct)} rendimiento anual est.
             </div>
@@ -83,7 +83,7 @@ export function PropertyCard({ property }: { property: Property }) {
                 <span>{formatPercent(fundingProgress)} financiado</span>
                 <span>{available.toLocaleString()} disponibles</span>
               </div>
-              <Progress value={fundingProgress} className="h-1.5" />
+              <Progress value={fundingProgress} className="h-1.5 [&_[data-slot=progress-indicator]]:bg-gold" />
             </div>
           )}
         </CardContent>

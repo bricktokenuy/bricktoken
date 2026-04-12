@@ -15,7 +15,7 @@ import type { User as SupabaseUser } from '@supabase/supabase-js'
 const navigation = [
   { name: 'Propiedades', href: '/propiedades' },
   { name: 'Cómo funciona', href: '/como-funciona' },
-  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Ventajas', href: '/#ventajas' },
 ]
 
 export function Header() {
@@ -42,10 +42,10 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-navy/95 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/">
-          <BrandWordmark />
+          <BrandWordmark variant="light" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -53,7 +53,7 @@ export function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-900"
+              className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
             >
               {item.name}
             </Link>
@@ -63,20 +63,20 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           {user ? (
             <>
-              <Link href="/dashboard" className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900">
+              <Link href="/dashboard" className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white">
                 <User className="h-4 w-4" />
                 {user.user_metadata?.full_name || user.email?.split('@')[0]}
               </Link>
-              <Button variant="ghost" size="sm" onClick={handleLogout} className="text-slate-500 hover:text-slate-900">
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="text-slate-400 hover:text-white hover:bg-white/10">
                 <LogOut className="h-4 w-4" />
               </Button>
             </>
           ) : (
             <>
-              <Link href="/auth/login" className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'text-slate-600 hover:text-slate-900')}>
+              <Link href="/auth/login" className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'text-slate-300 hover:text-white hover:bg-white/10')}>
                 Iniciar sesión
               </Link>
-              <Link href="/auth/registro" className={cn(buttonVariants({ size: 'sm' }), 'bg-blue-600 hover:bg-blue-700 text-white')}>
+              <Link href="/auth/registro" className={cn(buttonVariants({ size: 'sm' }), 'bg-gold hover:bg-gold-dark text-navy font-semibold')}>
                 Crear cuenta
               </Link>
             </>
@@ -84,16 +84,16 @@ export function Header() {
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'md:hidden text-slate-600')}>
+          <SheetTrigger className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'md:hidden text-white hover:bg-white/10')}>
             <Menu className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="w-80 flex flex-col">
+          <SheetContent side="right" className="w-80 flex flex-col bg-navy border-white/10">
             <SheetTitle>
-              <BrandWordmark size="sm" />
+              <BrandWordmark size="sm" variant="light" />
             </SheetTitle>
 
             <nav className="mt-10 flex flex-1 flex-col items-center text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
                 Navegación
               </p>
               <div className="mt-4 flex flex-col items-center gap-1 w-full">
@@ -102,26 +102,26 @@ export function Header() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-lg px-4 py-3 text-base font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                    className="w-full rounded-lg px-4 py-3 text-base font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     {item.name}
                   </Link>
                 ))}
               </div>
 
-              <div className="my-6 h-px w-16 bg-slate-200" />
+              <div className="my-6 h-px w-16 bg-white/10" />
 
               <div className="flex w-full flex-col gap-3 px-4">
                 {user ? (
                   <>
-                    <div className="text-sm font-medium text-slate-700 py-2">
+                    <div className="text-sm font-medium text-slate-300 py-2">
                       {user.user_metadata?.full_name || user.email}
                     </div>
                     <Button
                       variant="outline"
                       size="lg"
                       onClick={() => { handleLogout(); setOpen(false) }}
-                      className="w-full border-slate-200 text-slate-700 h-11"
+                      className="w-full border-white/20 text-slate-300 hover:bg-white/10 h-11"
                     >
                       Cerrar sesión
                     </Button>
@@ -131,14 +131,14 @@ export function Header() {
                     <Link
                       href="/auth/login"
                       onClick={() => setOpen(false)}
-                      className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full border-slate-200 text-slate-700 h-11')}
+                      className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full border-white/20 text-slate-300 hover:bg-white/10 h-11')}
                     >
                       Iniciar sesión
                     </Link>
                     <Link
                       href="/auth/registro"
                       onClick={() => setOpen(false)}
-                      className={cn(buttonVariants({ size: 'lg' }), 'w-full bg-blue-600 hover:bg-blue-700 text-white h-11')}
+                      className={cn(buttonVariants({ size: 'lg' }), 'w-full bg-gold hover:bg-gold-dark text-navy font-semibold h-11')}
                     >
                       Crear cuenta
                     </Link>
@@ -147,9 +147,9 @@ export function Header() {
               </div>
             </nav>
 
-            <div className="border-t border-slate-100 px-4 py-4 text-center">
-              <p className="text-xs text-slate-400">info@bricktoken.uy</p>
-              <p className="mt-0.5 text-xs text-slate-300">Montevideo, Uruguay</p>
+            <div className="border-t border-white/10 px-4 py-4 text-center">
+              <p className="text-xs text-slate-500">info@bricktoken.uy</p>
+              <p className="mt-0.5 text-xs text-slate-600">Montevideo, Uruguay</p>
             </div>
           </SheetContent>
         </Sheet>

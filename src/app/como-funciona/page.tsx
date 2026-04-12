@@ -106,10 +106,10 @@ export default function ComoFunciona() {
       {/* Hero */}
       <section className="bg-white py-24">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">
             Proceso de inversion
           </p>
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
             Como funciona BrickToken
           </h1>
           <p className="mt-6 text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
@@ -123,11 +123,11 @@ export default function ComoFunciona() {
       <section className="bg-slate-50 py-20">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-start gap-5">
-            <div className="rounded-xl bg-blue-50 p-3.5 shrink-0">
-              <Building2 className="h-7 w-7 text-blue-600" />
+            <div className="rounded-xl bg-gold/10 p-3.5 shrink-0">
+              <Building2 className="h-7 w-7 text-gold" />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-2">
                 Plataforma
               </p>
               <h2 className="text-2xl font-bold text-slate-900">
@@ -151,11 +151,11 @@ export default function ComoFunciona() {
       <section className="bg-white py-20">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-start gap-5">
-            <div className="rounded-xl bg-blue-50 p-3.5 shrink-0">
-              <Landmark className="h-7 w-7 text-blue-600" />
+            <div className="rounded-xl bg-gold/10 p-3.5 shrink-0">
+              <Landmark className="h-7 w-7 text-gold" />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-2">
                 Marco legal
               </p>
               <h2 className="text-2xl font-bold text-slate-900">
@@ -187,11 +187,11 @@ export default function ComoFunciona() {
       <section className="bg-slate-50 py-20">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-start gap-5">
-            <div className="rounded-xl bg-blue-50 p-3.5 shrink-0">
-              <Coins className="h-7 w-7 text-blue-600" />
+            <div className="rounded-xl bg-gold/10 p-3.5 shrink-0">
+              <Coins className="h-7 w-7 text-gold" />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-2">
                 Tecnologia
               </p>
               <h2 className="text-2xl font-bold text-slate-900">Los tokens</h2>
@@ -218,7 +218,7 @@ export default function ComoFunciona() {
       {/* El proceso */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-4xl px-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-3 text-center">
             Paso a paso
           </p>
           <h2 className="text-2xl font-bold text-slate-900 text-center mb-14">
@@ -229,11 +229,11 @@ export default function ComoFunciona() {
               <Card key={index} className="overflow-hidden border-slate-200">
                 <CardContent className="flex items-start gap-5 p-7">
                   <div className="flex items-center gap-4 shrink-0">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold text-sm font-bold text-navy">
                       {index + 1}
                     </span>
-                    <div className="rounded-xl bg-blue-50 p-2.5">
-                      <step.icon className="h-5 w-5 text-blue-600" />
+                    <div className="rounded-xl bg-gold/10 p-2.5">
+                      <step.icon className="h-5 w-5 text-gold" />
                     </div>
                   </div>
                   <div>
@@ -255,11 +255,11 @@ export default function ComoFunciona() {
       <section className="bg-slate-50 py-20">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-center gap-4 mb-12">
-            <div className="rounded-xl bg-blue-50 p-3.5">
-              <HelpCircle className="h-7 w-7 text-blue-600" />
+            <div className="rounded-xl bg-gold/10 p-3.5">
+              <HelpCircle className="h-7 w-7 text-gold" />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1">
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-1">
                 FAQ
               </p>
               <h2 className="text-2xl font-bold text-slate-900">
@@ -273,7 +273,7 @@ export default function ComoFunciona() {
                 key={index}
                 className="group rounded-xl border border-slate-200 bg-white"
               >
-                <summary className="flex cursor-pointer items-center justify-between p-6 font-medium text-slate-900 hover:text-blue-600 transition-colors">
+                <summary className="flex cursor-pointer items-center justify-between p-6 font-medium text-slate-900 hover:text-gold transition-colors">
                   {faq.question}
                   <ChevronDown className="h-5 w-5 text-slate-400 transition-transform group-open:rotate-180" />
                 </summary>
@@ -287,10 +287,10 @@ export default function ComoFunciona() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-900 py-20">
+      <section className="bg-navy py-20">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <ShieldCheck className="mx-auto h-12 w-12 text-slate-400 mb-5" />
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="font-heading text-3xl font-bold text-white">
             Empeza a invertir hoy
           </h2>
           <p className="mt-4 text-slate-400 text-lg max-w-xl mx-auto">
@@ -302,7 +302,7 @@ export default function ComoFunciona() {
               href="/auth/registro"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-blue-600 hover:bg-blue-700 text-white"
+                "bg-gold hover:bg-gold-dark text-navy font-semibold"
               )}
             >
               Crear cuenta gratis

@@ -3,61 +3,66 @@ import { BrandWordmark } from '@/components/BrandLogo'
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-slate-200 bg-slate-50">
+    <footer className="mt-auto border-t border-white/10 bg-navy">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
             <Link href="/">
-              <BrandWordmark size="sm" />
+              <BrandWordmark size="sm" variant="light" />
             </Link>
-            <p className="mt-3 text-sm leading-relaxed text-slate-500">
-              Inversión inmobiliaria fraccionada en Uruguay.
-              Respaldada por fideicomisos escriturados.
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              Democratizando la inversión inmobiliaria en Uruguay a través de la tokenización.
             </p>
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Plataforma</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Plataforma</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <Link href="/propiedades" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                <Link href="/propiedades" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Propiedades
                 </Link>
               </li>
               <li>
-                <Link href="/como-funciona" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                <Link href="/como-funciona" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Cómo funciona
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+                <Link href="/dashboard" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  FAQ
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Legal</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Legal</h3>
             <ul className="mt-4 space-y-3">
-              <li className="text-sm text-slate-600">Términos y condiciones</li>
-              <li className="text-sm text-slate-600">Política de privacidad</li>
-              <li className="text-sm text-slate-600">Marco regulatorio</li>
+              <li className="text-sm text-slate-400">Términos de uso</li>
+              <li className="text-sm text-slate-400">Privacidad</li>
+              <li className="text-sm text-slate-400">Regulaciones</li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Contacto</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300">Contacto</h3>
             <ul className="mt-4 space-y-3">
-              <li className="text-sm text-slate-600">info@bricktoken.uy</li>
-              <li className="text-sm text-slate-600">Montevideo, Uruguay</li>
+              <li className="text-sm text-slate-400">info@bricktoken.uy</li>
+              <li className="text-sm text-slate-400">LinkedIn</li>
+              <li className="text-sm text-slate-400">Twitter</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-slate-200 pt-6 text-center text-xs text-slate-400">
+        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-slate-500">
           &copy; {new Date().getFullYear()} BrickToken. Todos los derechos reservados.
-          Cada token representa una participación beneficiaria en un fideicomiso inmobiliario constituido bajo la Ley 17.703.
+          Operado bajo la Ley 17.703 de Fideicomisos.
         </div>
       </div>
     </footer>
