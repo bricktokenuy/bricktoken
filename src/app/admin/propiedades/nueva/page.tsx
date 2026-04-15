@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { DEPARTMENTS } from "@/lib/demo-data"
 import { Button } from "@/components/ui/button"
@@ -15,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ArrowLeft, ImagePlus } from "lucide-react"
+import { ArrowLeft, ImagePlus, Loader2 } from "lucide-react"
 
 function slugify(text: string): string {
   return text
@@ -27,6 +28,9 @@ function slugify(text: string): string {
 }
 
 export default function NuevaPropiedad() {
+  const router = useRouter()
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState("")
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [location, setLocation] = useState("")
@@ -40,6 +44,7 @@ export default function NuevaPropiedad() {
   const [bathrooms, setBathrooms] = useState("")
   const [areaM2, setAreaM2] = useState("")
   const [status, setStatus] = useState("coming_soon")
+  const [fideicomisoNumber, setFideicomisoNumber] = useState("")
 
   const slug = useMemo(() => slugify(name), [name])
 
@@ -52,10 +57,45 @@ export default function NuevaPropiedad() {
     return 0
   }, [totalValue, tokenPrice])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Placeholder - would call API
-    alert("Propiedad creada (demo)")
+    setSaving(true)
+    setError("")
+
+    try {
+      const res = await fetch('/api/admin/propiedades', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          description,
+          location,
+          department,
+          address,
+          total_value: parseFloat(totalValue),
+          token_price: parseFloat(tokenPrice),
+          annual_yield_pct: parseFloat(annualYield) || 0,
+          property_type: propertyType,
+          bedrooms: bedrooms ? parseInt(bedrooms) : null,
+          bathrooms: bathrooms ? parseInt(bathrooms) : null,
+          area_m2: parseFloat(areaM2),
+          status,
+          fideicomiso_number: fideicomisoNumber || null,
+          images: [],
+          documents: [],
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Error al crear la propiedad')
+      }
+
+      router.push('/admin')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al crear la propiedad')
+      setSaving(false)
+    }
   }
 
   return (
@@ -74,6 +114,12 @@ export default function NuevaPropiedad() {
           <h1 className="text-2xl font-bold text-slate-900">Nueva propiedad</h1>
         </div>
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Basic info */}
@@ -345,6 +391,29 @@ export default function NuevaPropiedad() {
           </CardContent>
         </Card>
 
+        {/* Legal */}
+        <Card className="border-slate-200">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg font-semibold text-slate-900">
+              Legal
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="fideicomisoNumber" className="text-slate-700 font-medium">
+                Numero de fideicomiso
+              </Label>
+              <Input
+                id="fideicomisoNumber"
+                placeholder="Ej: FID-2026-001"
+                value={fideicomisoNumber}
+                onChange={(e) => setFideicomisoNumber(e.target.value)}
+                className="border-slate-200 focus-visible:ring-blue-600"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Images */}
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
@@ -375,7 +444,9 @@ export default function NuevaPropiedad() {
           <Button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white"
+            disabled={saving}
           >
+            {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Crear propiedad
           </Button>
         </div>

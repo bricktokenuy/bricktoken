@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use, useEffect } from 'react'
+import { useState, use } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -14,9 +14,7 @@ import {
   Coins,
   ArrowLeft,
 } from 'lucide-react'
-import { formatUSD, formatPercent, getStatusLabel, getStatusColor, getPropertyTypeLabel } from '@/lib/demo-data'
-import { createClient } from '@/lib/supabase/client'
-import type { Property } from '@/lib/types'
+import { demoProperties, formatUSD, formatPercent, getStatusLabel, getStatusColor, getPropertyTypeLabel } from '@/lib/demo-data'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -39,7 +37,18 @@ function PropertyTypeIcon({ type }: { type: string }) {
   }
 }
 
-function PropertyDetail({ property }: { property: Property }) {
+export default function PropertyDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = use(params)
+  const property = demoProperties.find((p) => p.slug === slug)
+
+  if (!property) {
+    notFound()
+  }
+
   const fundingProgress = (property.tokens_sold / property.total_tokens) * 100
   const tokensAvailable = property.total_tokens - property.tokens_sold
 
@@ -280,7 +289,7 @@ function PropertyDetail({ property }: { property: Property }) {
                 </div>
 
                 <Link
-                  href="/auth/registro"
+                  href={`/propiedades/${property.slug}/comprar`}
                   className={cn(
                     buttonVariants({ size: 'lg' }),
                     'w-full bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-600/20'
@@ -295,44 +304,4 @@ function PropertyDetail({ property }: { property: Property }) {
       </div>
     </div>
   )
-}
-
-export default function PropertyDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = use(params)
-  const [property, setProperty] = useState<Property | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchProperty() {
-      const supabase = createClient()
-      const { data } = await supabase
-        .from('properties')
-        .select('*')
-        .eq('slug', slug)
-        .single()
-      if (data) {
-        setProperty(data as Property)
-      }
-      setLoading(false)
-    }
-    fetchProperty()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
-      </div>
-    )
-  }
-
-  if (!property) {
-    notFound()
-  }
-
-  return <PropertyDetail property={property} />
 }

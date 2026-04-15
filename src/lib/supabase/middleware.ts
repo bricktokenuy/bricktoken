@@ -1,6 +1,31 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+const ADMIN_EMAILS = ['bricktoken.uy@gmail.com']
+
+const PUBLIC_PATHS = ['/', '/propiedades', '/como-funciona', '/auth']
+const PROTECTED_PATHS = ['/dashboard', '/api/comprar']
+const ADMIN_PATHS = ['/admin', '/api/admin']
+
+function isPublicRoute(pathname: string): boolean {
+  if (pathname === '/') return true
+  return PUBLIC_PATHS.some(
+    (path) => path !== '/' && (pathname === path || pathname.startsWith(path + '/'))
+  )
+}
+
+function isAdminRoute(pathname: string): boolean {
+  return ADMIN_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(path + '/')
+  )
+}
+
+function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(path + '/')
+  )
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
@@ -25,18 +50,46 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  // Protected routes: redirect to login if not authenticated
-  const protectedPaths = ['/dashboard', '/admin']
-  const isProtected = protectedPaths.some(path =>
-    request.nextUrl.pathname.startsWith(path)
-  )
+  const pathname = request.nextUrl.pathname
 
-  if (isProtected && !user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/auth/login'
-    return NextResponse.redirect(url)
+  // Public routes: no auth needed
+  if (isPublicRoute(pathname)) {
+    return supabaseResponse
+  }
+
+  // Admin routes: require auth + admin role
+  if (isAdminRoute(pathname)) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth/login'
+      url.searchParams.set('next', pathname)
+      return NextResponse.redirect(url)
+    }
+
+    const isAdmin = ADMIN_EMAILS.includes(user.email ?? '')
+    if (!isAdmin) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/no-autorizado'
+      return NextResponse.redirect(url)
+    }
+
+    return supabaseResponse
+  }
+
+  // Protected routes: require auth
+  if (isProtectedRoute(pathname)) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth/login'
+      url.searchParams.set('next', pathname)
+      return NextResponse.redirect(url)
+    }
+
+    return supabaseResponse
   }
 
   return supabaseResponse
