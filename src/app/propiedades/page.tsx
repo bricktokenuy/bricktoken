@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { demoProperties, DEPARTMENTS, getStatusLabel, getPropertyTypeLabel } from '@/lib/demo-data'
+import { useState, useEffect, useCallback } from 'react'
+import { DEPARTMENTS, getStatusLabel, getPropertyTypeLabel } from '@/lib/demo-data'
+import { getPropertiesClient } from '@/lib/queries-client'
 import { PropertyCard } from '@/components/properties/PropertyCard'
+import type { Property } from '@/lib/types'
 import {
   Select,
   SelectContent,
@@ -18,19 +20,27 @@ export default function PropiedadesPage() {
   const [department, setDepartment] = useState<string>('all')
   const [propertyType, setPropertyType] = useState<string>('all')
   const [status, setStatus] = useState<string>('all')
+  const [filtered, setFiltered] = useState<Property[]>([])
+  const [loading, setLoading] = useState(true)
 
   const handleDepartmentChange = (value: string | null) => setDepartment(value ?? 'all')
   const handleTypeChange = (value: string | null) => setPropertyType(value ?? 'all')
   const handleStatusChange = (value: string | null) => setStatus(value ?? 'all')
 
-  const filtered = useMemo(() => {
-    return demoProperties.filter((p) => {
-      if (department !== 'all' && p.department !== department) return false
-      if (propertyType !== 'all' && p.property_type !== propertyType) return false
-      if (status !== 'all' && p.status !== status) return false
-      return true
+  const fetchProperties = useCallback(async () => {
+    setLoading(true)
+    const data = await getPropertiesClient({
+      department,
+      property_type: propertyType,
+      status,
     })
+    setFiltered(data)
+    setLoading(false)
   }, [department, propertyType, status])
+
+  useEffect(() => {
+    fetchProperties()
+  }, [fetchProperties])
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

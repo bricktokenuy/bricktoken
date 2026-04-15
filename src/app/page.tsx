@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { ArrowRight, Shield, Coins, BarChart3, Building2, FileText, MapPin } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { PropertyCard } from '@/components/properties/PropertyCard'
-import { demoProperties } from '@/lib/demo-data'
+import { getFeaturedProperties } from '@/lib/queries'
 import { cn } from '@/lib/utils'
 
-export default function HomePage() {
-  const featuredProperties = demoProperties.filter(p => p.status === 'funding').slice(0, 3)
+export default async function HomePage() {
+  const featuredProperties = await getFeaturedProperties()
 
   return (
     <div>

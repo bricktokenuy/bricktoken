@@ -11,9 +11,9 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      // Check if investor record exists, create if not
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
+        // Check if investor record already exists
         const { data: investor } = await supabase
           .from('investors')
           .select('id')
@@ -22,14 +22,18 @@ export async function GET(request: Request) {
 
         if (!investor) {
           const meta = user.user_metadata
-          await supabase.from('investors').insert({
+          const { error: insertError } = await supabase.from('investors').insert({
             id: user.id,
             email: user.email!,
             full_name: meta?.full_name || user.email!.split('@')[0],
             phone: meta?.phone || null,
             document_type: meta?.document_type || 'CI',
-            document_number: meta?.document_number || '',
+            document_number: meta?.document_number || 'pendiente',
           })
+
+          if (insertError) {
+            console.error('Error creating investor record:', insertError)
+          }
         }
       }
 
