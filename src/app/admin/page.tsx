@@ -1,16 +1,14 @@
 'use client'
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import {
+  demoProperties,
   formatUSD,
   formatPercent,
   getStatusLabel,
   getStatusColor,
   getPropertyTypeLabel,
 } from "@/lib/demo-data"
-import { getPropertiesClient } from "@/lib/queries-client"
-import type { Property } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -32,18 +30,12 @@ import {
 } from "lucide-react"
 
 export default function AdminDashboard() {
-  const [properties, setProperties] = useState<Property[]>([])
-
-  useEffect(() => {
-    getPropertiesClient().then(setProperties)
-  }, [])
-
-  const totalValue = properties.reduce((sum, p) => sum + Number(p.total_value), 0)
-  const totalTokensSold = properties.reduce(
+  const totalValue = demoProperties.reduce((sum, p) => sum + p.total_value, 0)
+  const totalTokensSold = demoProperties.reduce(
     (sum, p) => sum + p.tokens_sold,
     0
   )
-  const totalTokens = properties.reduce(
+  const totalTokens = demoProperties.reduce(
     (sum, p) => sum + p.total_tokens,
     0
   )
@@ -52,7 +44,7 @@ export default function AdminDashboard() {
   const stats = [
     {
       label: "Propiedades",
-      value: properties.length.toString(),
+      value: demoProperties.length.toString(),
       icon: Building2,
     },
     {
@@ -84,12 +76,20 @@ export default function AdminDashboard() {
             Panel de administracion
           </h1>
         </div>
-        <Link href="/admin/propiedades/nueva">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-            <Plus className="mr-2 h-4 w-4" />
-            Nueva propiedad
-          </Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/admin/valuaciones">
+            <Button variant="outline" className="border-slate-200 text-slate-700 hover:bg-slate-50">
+              <Coins className="mr-2 h-4 w-4" />
+              Valuaciones
+            </Button>
+          </Link>
+          <Link href="/admin/propiedades/nueva">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Plus className="mr-2 h-4 w-4" />
+              Nueva propiedad
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {properties.map((property) => (
+              {demoProperties.map((property) => (
                 <TableRow key={property.id} className="border-slate-100">
                   <TableCell className="font-medium text-slate-900">
                     {property.name}

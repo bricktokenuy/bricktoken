@@ -14,6 +14,7 @@ import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 const navigation = [
   { name: 'Propiedades', href: '/propiedades' },
+  { name: 'Marketplace', href: '/marketplace' },
   { name: 'Cómo funciona', href: '/como-funciona' },
   { name: 'Ventajas', href: '/#ventajas' },
 ]

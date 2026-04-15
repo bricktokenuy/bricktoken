@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use } from 'react'
+import { useState, useEffect, use } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -9,12 +9,16 @@ import {
   Bath,
   Maximize,
   TrendingUp,
+  TrendingDown,
   FileText,
   Shield,
   Coins,
   ArrowLeft,
+  BarChart3,
 } from 'lucide-react'
 import { demoProperties, formatUSD, formatPercent, getStatusLabel, getStatusColor, getPropertyTypeLabel } from '@/lib/demo-data'
+import { createClient } from '@/lib/supabase/client'
+import type { Valuation } from '@/lib/types'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -35,6 +39,91 @@ function PropertyTypeIcon({ type }: { type: string }) {
     default:
       return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
   }
+}
+
+function ValuationHistory({ propertyId }: { propertyId: string }) {
+  const [valuations, setValuations] = useState<Valuation[]>([])
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase
+      .from('valuations')
+      .select('*')
+      .eq('property_id', propertyId)
+      .eq('status', 'applied')
+      .order('valuation_date', { ascending: false })
+      .then(({ data }) => {
+        if (data) setValuations(data as Valuation[])
+      })
+  }, [propertyId])
+
+  if (valuations.length === 0) return null
+
+  return (
+    <>
+      <Separator className="border-slate-100" />
+      <div>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-blue-600">
+          Historial
+        </p>
+        <h2 className="text-lg font-semibold text-slate-900 mb-5 flex items-center gap-2">
+          <BarChart3 className="h-5 w-5 text-blue-600" />
+          Historial de valuaciones
+        </h2>
+        <div className="space-y-3">
+          {valuations.map((valuation) => (
+            <div
+              key={valuation.id}
+              className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+            >
+              <div className="space-y-1">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium text-slate-900">
+                    {new Date(valuation.valuation_date).toLocaleDateString('es-UY', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  {valuation.appraiser && (
+                    <span className="text-xs text-slate-400">
+                      por {valuation.appraiser}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <span>{formatUSD(valuation.previous_value)}</span>
+                  <span className="text-slate-300">&rarr;</span>
+                  <span className="font-medium text-slate-900">
+                    {formatUSD(valuation.new_value)}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                {valuation.change_pct > 0 ? (
+                  <TrendingUp className="h-4 w-4 text-green-600" />
+                ) : valuation.change_pct < 0 ? (
+                  <TrendingDown className="h-4 w-4 text-red-600" />
+                ) : null}
+                <span
+                  className={`text-sm font-semibold ${
+                    valuation.change_pct > 0
+                      ? 'text-green-600'
+                      : valuation.change_pct < 0
+                        ? 'text-red-600'
+                        : 'text-slate-500'
+                  }`}
+                >
+                  {valuation.change_pct > 0 ? '+' : ''}
+                  {formatPercent(valuation.change_pct)}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default function PropertyDetailPage({
@@ -182,6 +271,9 @@ export default function PropertyDetailPage({
               </div>
             </div>
           )}
+
+          {/* Historial de valuaciones */}
+          <ValuationHistory propertyId={property.id} />
         </div>
 
         {/* Right column: investment panel */}

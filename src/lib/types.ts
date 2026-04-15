@@ -3,6 +3,8 @@ export type PropertyType = 'apartment' | 'house' | 'land' | 'commercial'
 export type KycStatus = 'pending' | 'verified' | 'rejected'
 export type TransactionType = 'buy' | 'sell' | 'yield'
 export type TransactionStatus = 'pending' | 'confirmed' | 'failed'
+export type SellOrderStatus = 'active' | 'cancelled' | 'filled' | 'partial'
+export type ValuationStatus = 'pending' | 'applied'
 export type HoldingStatus = 'active' | 'sold' | 'pending'
 export type DistributionStatus = 'pending' | 'distributed'
 
@@ -79,6 +81,52 @@ export interface Transaction {
   fee: number
   tx_signature: string | null
   status: TransactionStatus
+  created_at: string
+  property?: Property
+}
+
+export interface SellOrder {
+  id: string
+  seller_id: string
+  property_id: string
+  holding_id: string
+  tokens: number
+  price_per_token: number
+  status: SellOrderStatus
+  tokens_remaining: number
+  created_at: string
+  updated_at: string
+  property?: Property
+  seller?: { full_name: string }
+}
+
+export interface Trade {
+  id: string
+  sell_order_id: string
+  buyer_id: string
+  seller_id: string
+  property_id: string
+  tokens: number
+  price_per_token: number
+  total_amount: number
+  fee: number
+  created_at: string
+  property?: Property
+}
+
+export interface Valuation {
+  id: string
+  property_id: string
+  previous_value: number
+  new_value: number
+  previous_token_price: number
+  new_token_price: number
+  change_pct: number
+  appraiser: string | null
+  notes: string | null
+  valuation_date: string
+  applied_at: string | null
+  status: ValuationStatus
   created_at: string
   property?: Property
 }

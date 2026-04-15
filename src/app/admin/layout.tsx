@@ -17,11 +17,45 @@ export default function AdminLayout({
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-3">
-              <BrandLogo size="sm" />
-              <span className="font-semibold text-slate-900 tracking-tight">
-                Admin
-              </span>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
+                <BrandLogo size="sm" />
+                <span className="font-semibold text-slate-900 tracking-tight">
+                  Admin
+                </span>
+              </div>
+              <nav className="flex items-center gap-4">
+                <Link
+                  href="/admin"
+                  className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/admin/distribuciones"
+                  className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  Distribuciones
+                </Link>
+                <Link
+                  href="/admin/valuaciones"
+                  className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  Valuaciones
+                </Link>
+                <Link
+                  href="/admin/kyc"
+                  className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  KYC
+                </Link>
+                <Link
+                  href="/admin/notificaciones"
+                  className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  Notificaciones
+                </Link>
+              </nav>
             </div>
             <Link
               href="/"
