@@ -66,7 +66,7 @@ export default function NuevaValuacionPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!propertyId || !newValue || !valuationDate) {
-      setError('Completa todos los campos requeridos')
+      setError('Completá todos los campos requeridos')
       return
     }
     setError(null)
@@ -89,10 +89,10 @@ export default function NuevaValuacionPage() {
         router.push('/admin/valuaciones')
       } else {
         const data = await res.json()
-        setError(data.error || 'Error al crear la valuacion')
+        setError(data.error || 'Error al crear la valuación')
       }
     } catch {
-      setError('Error de conexion')
+      setError('Error de conexión')
     } finally {
       setSubmitting(false)
     }
@@ -113,9 +113,9 @@ export default function NuevaValuacionPage() {
             Valuaciones
           </p>
         </div>
-        <h1 className="text-2xl font-bold text-slate-900">Nueva valuacion</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Nueva valuación</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Registra una nueva tasacion para una propiedad
+          Registrá una nueva tasación para una propiedad
         </p>
       </div>
 
@@ -167,7 +167,7 @@ export default function NuevaValuacionPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-400">Ubicacion</p>
+                  <p className="text-xs text-slate-400">Ubicación</p>
                   <p className="text-lg font-bold text-slate-900">
                     {selectedProperty.location}
                   </p>
@@ -182,7 +182,7 @@ export default function NuevaValuacionPage() {
           <CardContent className="p-6 space-y-6">
             <div className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5 text-blue-600" />
-              <h2 className="text-lg font-semibold text-slate-900">Datos de tasacion</h2>
+              <h2 className="text-lg font-semibold text-slate-900">Datos de tasación</h2>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -203,7 +203,7 @@ export default function NuevaValuacionPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="valuation_date" className="text-sm text-slate-600">
-                  Fecha de tasacion *
+                  Fecha de tasación *
                 </Label>
                 <Input
                   id="valuation_date"
@@ -232,7 +232,7 @@ export default function NuevaValuacionPage() {
               </Label>
               <Textarea
                 id="notes"
-                placeholder="Notas adicionales sobre la tasacion..."
+                placeholder="Notas adicionales sobre la tasación..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
@@ -249,7 +249,7 @@ export default function NuevaValuacionPage() {
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
                   Vista previa
                 </p>
-                <h2 className="text-lg font-semibold text-slate-900">Impacto de la valuacion</h2>
+                <h2 className="text-lg font-semibold text-slate-900">Impacto de la valuación</h2>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
@@ -303,7 +303,7 @@ export default function NuevaValuacionPage() {
                 }`}
               >
                 <p className="text-sm font-medium text-slate-700">
-                  El precio del token pasara de{' '}
+                  El precio del token pasará de{' '}
                   <span className="font-bold">{formatUSD(calculations.previousTokenPrice)}</span>
                   {' '}a{' '}
                   <span className="font-bold">{formatUSD(calculations.newTokenPrice)}</span>
@@ -341,7 +341,7 @@ export default function NuevaValuacionPage() {
             className="bg-blue-600 hover:bg-blue-700 text-white px-8"
             disabled={submitting || !propertyId || !newValue || !valuationDate}
           >
-            {submitting ? 'Creando...' : 'Crear valuacion'}
+            {submitting ? 'Creando...' : 'Crear valuación'}
           </Button>
           <Link
             href="/admin/valuaciones"

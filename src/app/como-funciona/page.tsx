@@ -19,84 +19,84 @@ import {
 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Como funciona",
+  title: "Cómo funciona",
 }
 
 const steps = [
   {
     icon: Search,
-    title: "Seleccion de propiedad",
+    title: "Selección de propiedad",
     description:
-      "Identificamos inmuebles con alto potencial de renta y plusvalia en Uruguay. Cada propiedad pasa un filtro riguroso de ubicacion, estado y mercado.",
+      "Identificamos inmuebles con alto potencial de renta y plusvalía en Uruguay. Cada propiedad pasa un filtro riguroso de ubicación, estado y mercado.",
   },
   {
     icon: FileCheck,
     title: "Due diligence",
     description:
-      "Un escribano realiza el estudio de titulos completo: verificacion de dominio, gravamenes, inhibiciones, y situacion catastral y tributaria.",
+      "Un escribano realiza el estudio de títulos completo: verificación de dominio, gravámenes, inhibiciones, y situación catastral y tributaria.",
   },
   {
     icon: Scale,
-    title: "Constitucion del fideicomiso",
+    title: "Constitución del fideicomiso",
     description:
-      "Se constituye un fideicomiso bajo Ley 17.703 mediante escritura publica. La propiedad queda como patrimonio fideicomitido, separado y protegido.",
+      "Se constituye un fideicomiso bajo Ley 17.703 mediante escritura pública. La propiedad queda como patrimonio fideicomitido, separado y protegido.",
   },
   {
     icon: Coins,
-    title: "Tokenizacion",
+    title: "Tokenización",
     description:
-      "Se crean tokens en la blockchain de Solana. Cada token representa una participacion proporcional en el fideicomiso y, por ende, en la propiedad.",
+      "Se crean tokens en la blockchain de Solana. Cada token representa una participación proporcional en el fideicomiso y, por ende, en la propiedad.",
   },
   {
     icon: ShoppingCart,
     title: "Venta de tokens",
     description:
-      "Los inversores adquieren tokens a traves de la plataforma. El proceso es simple: registrarse, verificar identidad, y comprar con transferencia o cripto.",
+      "Los inversores adquieren tokens a través de la plataforma. El proceso es simple: registrarse, verificar identidad, y comprar con transferencia o cripto.",
   },
   {
     icon: Home,
     title: "Alquiler de la propiedad",
     description:
-      "Una administradora profesional gestiona el alquiler, mantenimiento y relacion con inquilinos. Vos solo ves los rendimientos.",
+      "Una administradora profesional gestiona el alquiler, mantenimiento y relación con inquilinos. Vos solo ves los rendimientos.",
   },
   {
     icon: TrendingUp,
-    title: "Distribucion de rendimientos",
+    title: "Distribución de rendimientos",
     description:
-      "Los ingresos por alquiler se distribuyen automaticamente a cada inversor de forma proporcional a sus tokens, de forma trimestral.",
+      "Los ingresos por alquiler se distribuyen automáticamente a cada inversor de forma proporcional a sus tokens, de forma trimestral.",
   },
 ]
 
 const faqs = [
   {
-    question: "Es legal?",
+    question: "¿Es legal?",
     answer:
-      "Si. BrickToken opera bajo el marco legal uruguayo utilizando fideicomisos regulados por la Ley 17.703. Cada propiedad cuenta con un fideicomiso constituido por escritura publica ante escribano. Los tokens representan participaciones en ese fideicomiso, lo cual es perfectamente legal.",
+      "Sí. BrickToken opera bajo el marco legal uruguayo utilizando fideicomisos regulados por la Ley 17.703. Cada propiedad cuenta con un fideicomiso constituido por escritura pública ante escribano. Los tokens representan participaciones en ese fideicomiso, lo cual es perfectamente legal.",
   },
   {
-    question: "Cuanto es lo minimo que puedo invertir?",
+    question: "¿Cuánto es lo mínimo que puedo invertir?",
     answer:
-      "Depende de la propiedad. Los precios de tokens arrancan desde USD 50 por token, lo que permite acceder a inversiones inmobiliarias que tradicionalmente requerian decenas o cientos de miles de dolares.",
+      "Depende de la propiedad. Los precios de tokens arrancan desde USD 50 por token, lo que permite acceder a inversiones inmobiliarias que tradicionalmente requerían decenas o cientos de miles de dólares.",
   },
   {
-    question: "Como cobro los rendimientos?",
+    question: "¿Cómo cobro los rendimientos?",
     answer:
-      "Los rendimientos por alquiler se distribuyen trimestralmente de forma automatica. Cada token holder recibe su parte proporcional directamente. Si tenes 100 de 1.000 tokens de una propiedad, recibis el 10% de los ingresos netos por alquiler.",
+      "Los rendimientos por alquiler se distribuyen trimestralmente de forma automática. Cada token holder recibe su parte proporcional directamente. Si tenés 100 de 1.000 tokens de una propiedad, recibís el 10% de los ingresos netos por alquiler.",
   },
   {
-    question: "Puedo vender mis tokens?",
+    question: "¿Puedo vender mis tokens?",
     answer:
-      "Si. Los tokens son transferibles. Estamos desarrollando un mercado secundario dentro de la plataforma para facilitar la compraventa entre inversores. Mientras tanto, las transferencias se pueden realizar directamente en la blockchain de Solana.",
+      "Sí. Los tokens son transferibles. El mercado secundario estará disponible próximamente: vas a poder listar tus tokens para vender a otros inversores directamente desde la plataforma.",
   },
   {
-    question: "Que pasa si la propiedad se desvaloriza?",
+    question: "¿Qué pasa si la propiedad se desvaloriza?",
     answer:
-      "Como toda inversion inmobiliaria, existe el riesgo de desvalorizacion. Sin embargo, el mercado inmobiliario uruguayo ha demostrado historicamente ser estable. Ademas, la diversificacion en multiples propiedades reduce significativamente este riesgo.",
+      "Como toda inversión inmobiliaria, existe el riesgo de desvalorización. Sin embargo, el mercado inmobiliario uruguayo ha demostrado históricamente ser estable. Además, la diversificación en múltiples propiedades reduce significativamente este riesgo.",
   },
   {
-    question: "Quien administra las propiedades?",
+    question: "¿Quién administra las propiedades?",
     answer:
-      "Cada propiedad es gestionada por una administradora profesional seleccionada por BrickToken. Ellos se encargan de la busqueda de inquilinos, cobro de alquileres, mantenimiento preventivo y correctivo, y toda la gestion operativa.",
+      "Cada propiedad es gestionada por una administradora profesional seleccionada por BrickToken. Ellos se encargan de la búsqueda de inquilinos, cobro de alquileres, mantenimiento preventivo y correctivo, y toda la gestión operativa.",
   },
 ]
 
@@ -107,14 +107,14 @@ export default function ComoFunciona() {
       <section className="bg-white py-24">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">
-            Proceso de inversion
+            Proceso de inversión
           </p>
           <h1 className="font-heading text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-            Como funciona BrickToken
+            Cómo funciona BrickToken
           </h1>
           <p className="mt-6 text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
             Invertir en inmuebles uruguayos nunca fue tan simple. Te explicamos
-            paso a paso como funciona la tokenizacion inmobiliaria.
+            paso a paso cómo funciona la tokenización inmobiliaria.
           </p>
         </div>
       </section>
@@ -131,14 +131,14 @@ export default function ComoFunciona() {
                 Plataforma
               </p>
               <h2 className="text-2xl font-bold text-slate-900">
-                Que es BrickToken?
+                ¿Qué es BrickToken?
               </h2>
               <p className="mt-4 text-slate-500 leading-relaxed">
-                BrickToken es una plataforma de inversion inmobiliaria
+                BrickToken es una plataforma de inversión inmobiliaria
                 fraccionada. Permitimos que cualquier persona invierta en
                 propiedades uruguayas de alta calidad desde montos accesibles,
                 sin necesidad de comprar un inmueble completo. Cada propiedad se
-                divide en tokens digitales que representan una fraccion del
+                divide en tokens digitales que representan una fracción del
                 valor, y los inversores reciben rendimientos proporcionales por
                 los alquileres generados.
               </p>
@@ -164,17 +164,17 @@ export default function ComoFunciona() {
               <p className="mt-4 text-slate-500 leading-relaxed">
                 Toda la estructura de BrickToken se basa en la{" "}
                 <strong className="text-slate-900">Ley 17.703 de Fideicomiso</strong> de Uruguay. Para cada
-                propiedad, un escribano publico constituye un fideicomiso
-                mediante escritura publica inscrita en el Registro. La propiedad
+                propiedad, un escribano público constituye un fideicomiso
+                mediante escritura pública inscrita en el Registro. La propiedad
                 se transfiere al patrimonio fideicomitido, que es un patrimonio
-                de afectacion separado: no pertenece ni al fiduciante, ni al
+                de afectación separado: no pertenece ni al fiduciante, ni al
                 fiduciario, ni a los beneficiarios de forma individual. Esto
-                brinda una proteccion juridica unica.
+                brinda una protección jurídica única.
               </p>
               <p className="mt-4 text-slate-500 leading-relaxed">
                 El fiduciario administra la propiedad en beneficio de los token
                 holders (beneficiarios del fideicomiso). Los rendimientos se
-                distribuyen segun lo establecido en el contrato de fideicomiso,
+                distribuyen según lo establecido en el contrato de fideicomiso,
                 de forma proporcional a la cantidad de tokens que posee cada
                 inversor.
               </p>
@@ -192,22 +192,22 @@ export default function ComoFunciona() {
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-2">
-                Tecnologia
+                Tecnología
               </p>
               <h2 className="text-2xl font-bold text-slate-900">Los tokens</h2>
               <p className="mt-4 text-slate-500 leading-relaxed">
                 Cada token es un activo digital registrado en la blockchain de{" "}
-                <strong className="text-slate-900">Solana</strong>, una de las redes mas rapidas y
-                economicas del mercado. Un token representa una participacion en
+                <strong className="text-slate-900">Solana</strong>, una de las redes más rápidas y
+                económicas del mercado. Un token representa una participación en
                 el fideicomiso que posee la propiedad real. No es una promesa ni
-                un derivado: esta respaldado por un inmueble escriturado en
-                Uruguay, con todas las garantias legales que eso implica.
+                un derivado: está respaldado por un inmueble escriturado en
+                Uruguay, con todas las garantías legales que eso implica.
               </p>
               <p className="mt-4 text-slate-500 leading-relaxed">
                 La blockchain brinda transparencia total: cualquiera puede
                 verificar la cantidad de tokens emitidos, las transferencias y
-                las distribuciones de rendimientos. Ademas, al ser tokens en
-                Solana, son transferibles las 24 horas del dia, los 7 dias de la
+                las distribuciones de rendimientos. Además, al ser tokens en
+                Solana, son transferibles las 24 horas del día, los 7 días de la
                 semana.
               </p>
             </div>
@@ -222,7 +222,7 @@ export default function ComoFunciona() {
             Paso a paso
           </p>
           <h2 className="text-2xl font-bold text-slate-900 text-center mb-14">
-            El proceso de inversion
+            El proceso de inversión
           </h2>
           <div className="space-y-5">
             {steps.map((step, index) => (
@@ -252,7 +252,7 @@ export default function ComoFunciona() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-slate-50 py-20">
+      <section id="faq" className="bg-slate-50 py-20">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-center gap-4 mb-12">
             <div className="rounded-xl bg-gold/10 p-3.5">
@@ -291,10 +291,10 @@ export default function ComoFunciona() {
         <div className="mx-auto max-w-4xl px-4 text-center">
           <ShieldCheck className="mx-auto h-12 w-12 text-slate-400 mb-5" />
           <h2 className="font-heading text-3xl font-bold text-white">
-            Empeza a invertir hoy
+            Empezá a invertir hoy
           </h2>
           <p className="mt-4 text-slate-400 text-lg max-w-xl mx-auto">
-            Crea tu cuenta en minutos y accede a las mejores propiedades de
+            Creá tu cuenta en minutos y accedé a las mejores propiedades de
             Uruguay.
           </p>
           <div className="mt-10 flex justify-center gap-4">

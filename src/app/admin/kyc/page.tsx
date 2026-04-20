@@ -122,13 +122,13 @@ export default function AdminKycPage() {
       {/* Header */}
       <div>
         <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1">
-          Verificacion KYC
+          Verificación KYC
         </p>
         <h1 className="text-2xl font-bold text-slate-900">
-          Revision de identidad
+          Revisión de identidad
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          Revisa y aprueba las verificaciones de identidad de los inversores.
+          Revisá y aprobá las verificaciones de identidad de los inversores.
         </p>
       </div>
 
@@ -147,7 +147,7 @@ export default function AdminKycPage() {
             </div>
             <div>
               <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                Pendientes de revision
+                Pendientes de revisión
               </p>
               <p className="mt-1 text-xl font-semibold text-slate-900">
                 {investors.length}

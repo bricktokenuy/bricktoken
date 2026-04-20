@@ -87,14 +87,14 @@ export default function AdminDistribuciones() {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1">
-            Administracion
+            Administración
           </p>
           <h1 className="text-2xl font-bold text-slate-900">Distribuciones</h1>
         </div>
         <Link href="/admin/distribuciones/nueva">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
             <Plus className="mr-2 h-4 w-4" />
-            Nueva distribucion
+            Nueva distribución
           </Button>
         </Link>
       </div>
@@ -155,7 +155,7 @@ export default function AdminDistribuciones() {
             <div className="p-12 text-center text-slate-400">Cargando distribuciones...</div>
           ) : distributions.length === 0 ? (
             <div className="p-12 text-center text-slate-400">
-              No hay distribuciones aun. Crea la primera.
+              No hay distribuciones todavía. Creá la primera.
             </div>
           ) : (
             <Table>

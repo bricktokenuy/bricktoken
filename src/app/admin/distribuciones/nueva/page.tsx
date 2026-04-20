@@ -107,10 +107,10 @@ export default function NuevaDistribucion() {
           Volver a distribuciones
         </Link>
         <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1">
-          Nueva distribucion
+          Nueva distribución
         </p>
         <h1 className="text-2xl font-bold text-slate-900">
-          Crear distribucion de rendimientos
+          Crear distribución de rendimientos
         </h1>
       </div>
 
@@ -185,7 +185,7 @@ export default function NuevaDistribucion() {
                   disabled={submitting || !selectedPropertyId || !period || !totalAmount}
                   className="bg-blue-600 hover:bg-blue-700 text-white w-full"
                 >
-                  {submitting ? 'Creando...' : 'Crear distribucion'}
+                  {submitting ? 'Creando...' : 'Crear distribución'}
                 </Button>
               </form>
             </CardContent>

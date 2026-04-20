@@ -9,6 +9,7 @@ import {
   Shield,
   Loader2,
   AlertCircle,
+  Info,
 } from 'lucide-react'
 import { demoProperties, formatUSD, formatPercent } from '@/lib/demo-data'
 import { Card, CardContent } from '@/components/ui/card'
@@ -18,6 +19,10 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 type PurchaseState = 'idle' | 'loading' | 'error'
+
+// Cualquier UUID (no estricto a v4) — los IDs reales en DB son uuid de Postgres.
+// Si no matchea, asumimos que es demo data (IDs '1'..'6').
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 export default function ComprarPage({
   params,
@@ -52,6 +57,7 @@ export default function ComprarPage({
   const fee = Math.round(totalCost * 0.025 * 100) / 100
   const totalWithFee = totalCost + fee
   const estimatedYield = (totalCost * property.annual_yield_pct) / 100
+  const isDemoProperty = !UUID_REGEX.test(property.id)
 
   async function handlePurchase() {
     setState('loading')
@@ -66,6 +72,15 @@ export default function ComprarPage({
           tokens: selectedTokens,
         }),
       })
+
+      // Session expired or never existed. The proxy normally catches this
+      // before the request lands here, but if cookies are stale (e.g. logged
+      // out in another tab) the API answers 401 and we bounce to login.
+      if (res.status === 401) {
+        const next = `/propiedades/${slug}/comprar`
+        router.push(`/auth/login?next=${encodeURIComponent(next)}`)
+        return
+      }
 
       const data = await res.json()
 
@@ -84,7 +99,7 @@ export default function ComprarPage({
       }
     } catch {
       setState('error')
-      setErrorMessage('Error de conexion. Intenta nuevamente.')
+      setErrorMessage('Error de conexión. Intentá nuevamente.')
     }
   }
 
@@ -107,7 +122,7 @@ export default function ComprarPage({
           {/* Header */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-              Confirmar inversion
+              Confirmar inversión
             </p>
             <h1 className="text-2xl font-bold text-slate-900">
               {property.name}
@@ -121,14 +136,17 @@ export default function ComprarPage({
               <div className="flex items-center gap-2">
                 <Coins className="h-5 w-5 text-blue-600" />
                 <h2 className="text-lg font-semibold text-slate-900">
-                  Selecciona tokens
+                  Seleccioná tokens
                 </h2>
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-3">
                   <span className="text-slate-400">Cantidad de tokens</span>
-                  <span className="font-bold text-blue-600">
+                  <span
+                    className="font-bold text-blue-600"
+                    aria-live="polite"
+                  >
                     {selectedTokens}
                   </span>
                 </div>
@@ -138,12 +156,16 @@ export default function ComprarPage({
                     setTokenCount(Array.isArray(val) ? val : [val])
                   }
                   min={1}
-                  max={Math.min(tokensAvailable, 500)}
+                  max={Math.min(tokensAvailable, 5000)}
                   disabled={state === 'loading'}
+                  aria-label="Cantidad de tokens a comprar"
+                  aria-valuemin={1}
+                  aria-valuemax={Math.min(tokensAvailable, 5000)}
+                  aria-valuenow={selectedTokens}
                 />
                 <div className="flex justify-between text-xs text-slate-400 mt-1.5">
                   <span>1</span>
-                  <span>{Math.min(tokensAvailable, 500)}</span>
+                  <span>{Math.min(tokensAvailable, 5000).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -165,7 +187,7 @@ export default function ComprarPage({
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-400">
-                    Comision plataforma (2.5%)
+                    Comisión plataforma (2.5%)
                   </span>
                   <span className="text-slate-900">{formatUSD(fee)}</span>
                 </div>
@@ -182,7 +204,7 @@ export default function ComprarPage({
                       Renta anual estimada
                     </span>
                     <span className="font-semibold text-blue-600">
-                      {formatUSD(estimatedYield)}/ano (
+                      {formatUSD(estimatedYield)}/año (
                       {formatPercent(property.annual_yield_pct)})
                     </span>
                   </div>
@@ -197,11 +219,31 @@ export default function ComprarPage({
             <div className="text-sm text-blue-800">
               <p className="font-medium">Pago seguro con MercadoPago</p>
               <p className="mt-1 text-blue-700">
-                Seras redirigido a MercadoPago para completar el pago de forma
-                segura. Aceptamos tarjetas de credito, debito y transferencias
+                Serás redirigido a MercadoPago para completar el pago de forma
+                segura. Aceptamos tarjetas de crédito, débito y transferencias
                 bancarias.
               </p>
             </div>
+          </div>
+
+          {/* Risk disclaimer */}
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <p className="text-sm text-amber-900 leading-relaxed">
+              Confirmás que entendés que esta es una inversión con riesgos, que las
+              rentabilidades son estimadas y no garantizadas, y que aceptás los{' '}
+              <Link href="/legal/terminos" className="underline font-medium hover:text-amber-700">
+                Términos
+              </Link>
+              , la{' '}
+              <Link href="/legal/privacidad" className="underline font-medium hover:text-amber-700">
+                Política de privacidad
+              </Link>
+              {' '}y las{' '}
+              <Link href="/legal/regulaciones" className="underline font-medium hover:text-amber-700">
+                Regulaciones aplicables
+              </Link>
+              .
+            </p>
           </div>
 
           {/* Error message */}
@@ -214,23 +256,36 @@ export default function ComprarPage({
 
           {/* Action buttons */}
           <div className="space-y-3">
-            <button
-              onClick={handlePurchase}
-              disabled={!canPurchase || state === 'loading'}
-              className={cn(
-                buttonVariants({ size: 'lg' }),
-                'w-full bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed'
-              )}
-            >
-              {state === 'loading' ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Procesando pago...
-                </>
-              ) : (
-                `Confirmar compra por ${formatUSD(totalWithFee)}`
-              )}
-            </button>
+            {isDemoProperty ? (
+              <div
+                role="status"
+                className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
+              >
+                <Info className="h-5 w-5 text-slate-500 mt-0.5 shrink-0" />
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  <span className="font-medium text-slate-900">Función disponible próximamente.</span>{' '}
+                  Esta es una propiedad de demostración mientras la plataforma está en preview.
+                </p>
+              </div>
+            ) : (
+              <button
+                onClick={handlePurchase}
+                disabled={!canPurchase || state === 'loading'}
+                className={cn(
+                  buttonVariants({ size: 'lg' }),
+                  'w-full bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed'
+                )}
+              >
+                {state === 'loading' ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Procesando pago...
+                  </>
+                ) : (
+                  `Confirmar compra por ${formatUSD(totalWithFee)}`
+                )}
+              </button>
+            )}
             <Link
               href={`/propiedades/${slug}`}
               className={cn(

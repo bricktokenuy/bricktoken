@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { isValidCI } from '@/lib/auth-errors'
 
 export async function GET() {
   const supabase = await createClient()
@@ -55,6 +56,19 @@ export async function POST(request: NextRequest) {
   if (!document_type || !document_number) {
     return NextResponse.json(
       { error: 'Tipo y número de documento son requeridos' },
+      { status: 400 }
+    )
+  }
+
+  // Server-side validation of Uruguayan CI. Mirrors the client check so a
+  // tampered request can't bypass it. Other document types (Pasaporte/DNI)
+  // currently have no algorithmic check.
+  if (
+    document_type === 'CI' &&
+    (typeof document_number !== 'string' || !isValidCI(document_number))
+  ) {
+    return NextResponse.json(
+      { error: 'Cédula uruguaya inválida. Verificá el número y el dígito verificador.' },
       { status: 400 }
     )
   }

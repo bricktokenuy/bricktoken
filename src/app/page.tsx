@@ -4,10 +4,13 @@ import { ArrowRight, Shield, Coins, BarChart3, Building2, FileText, MapPin } fro
 import { buttonVariants } from '@/components/ui/button'
 import { PropertyCard } from '@/components/properties/PropertyCard'
 import { getFeaturedProperties } from '@/lib/queries'
+import { demoProperties } from '@/lib/demo-data'
 import { cn } from '@/lib/utils'
 
 export default async function HomePage() {
-  const featuredProperties = await getFeaturedProperties()
+  const dbProperties = await getFeaturedProperties()
+  // Fallback to demo data (pre-launch) if DB is empty
+  const featuredProperties = dbProperties.length > 0 ? dbProperties : demoProperties
 
   return (
     <div>
@@ -37,8 +40,8 @@ export default async function HomePage() {
 
           {/* Heading */}
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-[5rem] leading-[1.08]">
-            Tokenizamos<br />
-            <span className="text-gold">Inmuebles.</span>
+            Tokenizamos{' '}
+            <span className="text-gold block sm:inline">Inmuebles.</span>
           </h1>
 
           {/* Subtitle */}
@@ -67,7 +70,7 @@ export default async function HomePage() {
           {/* Stats bar */}
           <div className="mt-16 grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-0">
             {[
-              { label: 'Propiedades', value: '6' },
+              { label: 'Propiedades', value: String(featuredProperties.length) },
               { label: 'Valor tokenizado', value: 'USD 3.3M' },
               { label: 'Inversores', value: '127' },
               { label: 'Yield promedio', value: '7.5%' },
@@ -109,7 +112,7 @@ export default async function HomePage() {
                 icon: BarChart3,
                 step: '03',
                 title: 'Cobrá rendimientos',
-                description: 'Recibí tu parte proporcional de los alquileres directamente. Vendé tus tokens cuando quieras en el mercado secundario.',
+                description: 'Recibí tu parte proporcional de los alquileres directamente. El mercado secundario para vender tus tokens va a estar disponible próximamente.',
               },
             ].map((item) => (
               <div key={item.step} className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-md">

@@ -94,7 +94,7 @@ export default function NotificacionesPage() {
       key: 'yield_distributed' as const,
       icon: TrendingUp,
       title: 'Rendimientos distribuidos',
-      description: 'Notificacion cuando se distribuyen rendimientos por alquiler.',
+      description: 'Notificación cuando se distribuyen rendimientos por alquiler.',
     },
     {
       key: 'platform_news' as const,
@@ -109,14 +109,14 @@ export default function NotificacionesPage() {
       <div className="container mx-auto max-w-2xl px-4 py-12 space-y-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-            Configuracion
+            Configuración
           </p>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
             <Bell className="h-6 w-6 text-blue-600" />
             Notificaciones
           </h1>
           <p className="mt-2 text-sm text-slate-500">
-            Configura que notificaciones por email deseas recibir.
+            Configurá qué notificaciones por email querés recibir.
           </p>
         </div>
 
@@ -157,7 +157,7 @@ export default function NotificacionesPage() {
         </Card>
 
         <p className="text-xs text-slate-400 text-center">
-          Los cambios se guardan automaticamente.
+          Los cambios se guardan automáticamente.
         </p>
       </div>
     </div>

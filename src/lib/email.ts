@@ -22,13 +22,12 @@ export async function sendEmail(options: EmailOptions): Promise<EmailResult> {
   const apiKey = process.env.RESEND_API_KEY
 
   if (!apiKey) {
-    // Console mode — development fallback
-    console.log('──────────────────────────────────────')
-    console.log('[EMAIL] Modo consola (RESEND_API_KEY no configurada)')
-    console.log(`  Para: ${options.to}`)
-    console.log(`  Asunto: ${options.subject}`)
-    console.log(`  HTML: ${options.html.slice(0, 200)}...`)
-    console.log('──────────────────────────────────────')
+    // Console mode — development fallback. No volcamos el HTML para evitar
+    // filtrar tokens, links de magic-link u otros datos sensibles a logs.
+    console.warn('[email] RESEND_API_KEY no configurada — email no enviado', {
+      to: options.to,
+      subject: options.subject,
+    })
     return { success: true }
   }
 

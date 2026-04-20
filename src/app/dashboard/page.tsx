@@ -169,8 +169,8 @@ export default function DashboardPage() {
             <div className="flex-1">
               <p className="text-sm font-medium">
                 {kycStatus === 'rejected'
-                  ? 'Tu verificacion de identidad fue rechazada. Por favor, vuelve a enviar tus documentos.'
-                  : 'Tu verificacion de identidad esta pendiente. Completa el proceso para poder invertir.'}
+                  ? 'Tu verificación de identidad fue rechazada. Por favor, volvé a enviar tus documentos.'
+                  : 'Tu verificación de identidad está pendiente. Completá el proceso para poder invertir.'}
               </p>
             </div>
             <Link
@@ -293,11 +293,11 @@ export default function DashboardPage() {
               <CardContent className="flex flex-col items-center justify-center py-12 text-center">
                 <Building2 className="h-10 w-10 text-slate-300 mb-4" />
                 <p className="text-lg font-medium text-slate-700 mb-1">
-                  Aun no tienes inversiones
+                  Todavía no tenés inversiones
                 </p>
                 <p className="text-sm text-slate-400 mb-6 max-w-sm">
-                  Explora las propiedades disponibles y comienza a invertir en bienes
-                  raices tokenizados.
+                  Explorá las propiedades disponibles y empezá a invertir en bienes
+                  raíces tokenizados.
                 </p>
                 <Link
                   href="/propiedades"
@@ -354,7 +354,7 @@ export default function DashboardPage() {
                       </div>
                       {holdingGain !== 0 && (
                         <div className="flex justify-between text-sm">
-                          <span className="text-slate-400">Ganancia/Perdida</span>
+                          <span className="text-slate-400">Ganancia/Pérdida</span>
                           <span
                             className={`font-medium flex items-center gap-1 ${
                               holdingGain > 0 ? 'text-green-600' : 'text-red-600'
@@ -409,11 +409,11 @@ export default function DashboardPage() {
               <CardContent className="flex flex-col items-center justify-center py-12 text-center">
                 <BarChart3 className="h-10 w-10 text-slate-300 mb-4" />
                 <p className="text-lg font-medium text-slate-700 mb-1">
-                  Sin transacciones aun
+                  Todavía no hay transacciones
                 </p>
                 <p className="text-sm text-slate-400 mb-6 max-w-sm">
-                  Cuando realices tu primera inversion, veras el historial de
-                  transacciones aqui.
+                  Cuando realices tu primera inversión, vas a ver el historial de
+                  transacciones acá.
                 </p>
                 <Link
                   href="/propiedades"

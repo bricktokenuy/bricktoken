@@ -126,7 +126,7 @@ export default function NuevaPropiedad() {
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Informacion basica
+              Información básica
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -158,11 +158,11 @@ export default function NuevaPropiedad() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="description" className="text-slate-700 font-medium">
-                Descripcion
+                Descripción
               </Label>
               <Textarea
                 id="description"
-                placeholder="Descripcion detallada de la propiedad..."
+                placeholder="Descripción detallada de la propiedad..."
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -177,7 +177,7 @@ export default function NuevaPropiedad() {
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Ubicacion
+              Ubicación
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -215,7 +215,7 @@ export default function NuevaPropiedad() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="address" className="text-slate-700 font-medium">
-                Direccion
+                Dirección
               </Label>
               <Input
                 id="address"
@@ -334,8 +334,8 @@ export default function NuevaPropiedad() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="coming_soon">Proximamente</SelectItem>
-                    <SelectItem value="funding">En financiacion</SelectItem>
+                    <SelectItem value="coming_soon">Próximamente</SelectItem>
+                    <SelectItem value="funding">En financiación</SelectItem>
                     <SelectItem value="funded">Financiado</SelectItem>
                     <SelectItem value="renting">Generando renta</SelectItem>
                     <SelectItem value="closed">Cerrado</SelectItem>
@@ -360,7 +360,7 @@ export default function NuevaPropiedad() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bathrooms" className="text-slate-700 font-medium">
-                  Banos
+                  Baños
                 </Label>
                 <Input
                   id="bathrooms"
@@ -374,7 +374,7 @@ export default function NuevaPropiedad() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="areaM2" className="text-slate-700 font-medium">
-                  Superficie (m2)
+                  Superficie (m²)
                 </Label>
                 <Input
                   id="areaM2"
@@ -401,7 +401,7 @@ export default function NuevaPropiedad() {
           <CardContent className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="fideicomisoNumber" className="text-slate-700 font-medium">
-                Numero de fideicomiso
+                Número de fideicomiso
               </Label>
               <Input
                 id="fideicomisoNumber"
@@ -418,14 +418,14 @@ export default function NuevaPropiedad() {
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Imagenes
+              Imágenes
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 p-14 text-center hover:border-blue-400 transition-colors">
               <ImagePlus className="h-10 w-10 text-slate-400 mb-3" />
               <p className="text-sm font-medium text-slate-500">
-                Arrastra imagenes aqui
+                Arrastrá imágenes acá
               </p>
               <p className="text-xs text-slate-400 mt-1">
                 PNG, JPG hasta 10MB

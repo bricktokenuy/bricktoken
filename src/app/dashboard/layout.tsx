@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 import { BrandLogo } from '@/components/BrandLogo'
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Mi portfolio',
 }
 
 export default function DashboardLayout({

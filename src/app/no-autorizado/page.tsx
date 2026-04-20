@@ -14,7 +14,7 @@ export default function NoAutorizadoPage() {
           Acceso denegado
         </h1>
         <p className="text-slate-500">
-          No ten&eacute;s permisos para acceder a esta p&aacute;gina.
+          No tenés permisos para acceder a esta página.
         </p>
         <Link
           href="/dashboard"

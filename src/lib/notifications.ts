@@ -68,7 +68,7 @@ export async function notifyKycRejected(
 ) {
   return sendEmail({
     to: investorEmail,
-    subject: 'Verificacion rechazada — BrickToken',
+    subject: 'Verificación rechazada — BrickToken',
     html: kycRejected(data),
   })
 }

@@ -219,11 +219,11 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
       )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Informacion basica */}
+        {/* Información básica */}
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Informacion basica
+              Información básica
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -255,11 +255,11 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
             </div>
             <div className="space-y-2">
               <Label htmlFor="description" className="text-sm font-medium text-slate-700">
-                Descripcion
+                Descripción
               </Label>
               <Textarea
                 id="description"
-                placeholder="Descripcion detallada de la propiedad..."
+                placeholder="Descripción detallada de la propiedad..."
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -293,8 +293,8 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="coming_soon">Proximamente</SelectItem>
-                    <SelectItem value="funding">En financiacion</SelectItem>
+                    <SelectItem value="coming_soon">Próximamente</SelectItem>
+                    <SelectItem value="funding">En financiación</SelectItem>
                     <SelectItem value="funded">Financiado</SelectItem>
                     <SelectItem value="renting">Generando renta</SelectItem>
                     <SelectItem value="closed">Cerrado</SelectItem>
@@ -305,11 +305,11 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
           </CardContent>
         </Card>
 
-        {/* Ubicacion */}
+        {/* Ubicación */}
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Ubicacion
+              Ubicación
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -347,7 +347,7 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
             </div>
             <div className="space-y-2">
               <Label htmlFor="address" className="text-sm font-medium text-slate-700">
-                Direccion
+                Dirección
               </Label>
               <Input
                 id="address"
@@ -361,11 +361,11 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
           </CardContent>
         </Card>
 
-        {/* Caracteristicas */}
+        {/* Características */}
         <Card className="border-slate-200">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-semibold text-slate-900">
-              Caracteristicas
+              Características
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -386,7 +386,7 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bathrooms" className="text-sm font-medium text-slate-700">
-                  Banos
+                  Baños
                 </Label>
                 <Input
                   id="bathrooms"
@@ -400,7 +400,7 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
               </div>
               <div className="space-y-2">
                 <Label htmlFor="areaM2" className="text-sm font-medium text-slate-700">
-                  Superficie (m2)
+                  Superficie (m²)
                 </Label>
                 <Input
                   id="areaM2"
@@ -512,7 +512,7 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
           <CardContent className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="fideicomisoNumber" className="text-sm font-medium text-slate-700">
-                Numero de fideicomiso
+                Número de fideicomiso
               </Label>
               <Input
                 id="fideicomisoNumber"
@@ -544,7 +544,7 @@ export default function EditarPropiedad({ params }: { params: Promise<{ id: stri
               <DialogHeader>
                 <DialogTitle>Eliminar propiedad</DialogTitle>
                 <DialogDescription>
-                  Esta accion no se puede deshacer. Se eliminara permanentemente la propiedad
+                  Esta acción no se puede deshacer. Se eliminará permanentemente la propiedad
                   &quot;{name}&quot; y todos sus datos asociados.
                 </DialogDescription>
               </DialogHeader>

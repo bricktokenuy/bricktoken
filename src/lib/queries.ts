@@ -34,9 +34,8 @@ export async function getFeaturedProperties(): Promise<Property[]> {
   const { data, error } = await supabase
     .from('properties')
     .select('*')
-    .eq('status', 'funding')
     .order('created_at', { ascending: false })
-    .limit(3)
+    .limit(6)
 
   if (error) {
     console.error('Error fetching featured properties:', error)

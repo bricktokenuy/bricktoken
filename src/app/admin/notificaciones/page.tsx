@@ -21,7 +21,7 @@ export default function AdminNotificacionesPage() {
 
   async function handleSend() {
     if (!subject.trim() || !message.trim()) {
-      setResult({ type: 'error', message: 'Completa el asunto y el mensaje.' })
+      setResult({ type: 'error', message: 'Completá el asunto y el mensaje.' })
       return
     }
 
@@ -45,7 +45,7 @@ export default function AdminNotificacionesPage() {
       } else {
         setResult({
           type: 'success',
-          message: `Notificacion enviada a ${data.sent} inversor(es). ${data.failed > 0 ? `${data.failed} fallaron.` : ''}`,
+          message: `Notificación enviada a ${data.sent} inversor(es). ${data.failed > 0 ? `${data.failed} fallaron.` : ''}`,
         })
         setSubject('')
         setMessage('')
@@ -54,7 +54,7 @@ export default function AdminNotificacionesPage() {
     } catch {
       setResult({
         type: 'error',
-        message: 'Error de red. Intenta de nuevo.',
+        message: 'Error de red. Intentá de nuevo.',
       })
     } finally {
       setSending(false)
@@ -73,7 +73,7 @@ export default function AdminNotificacionesPage() {
           Notificaciones masivas
         </h1>
         <p className="mt-2 text-sm text-slate-500">
-          Envia un email a todos los inversores registrados en la plataforma.
+          Enviá un email a todos los inversores registrados en la plataforma.
         </p>
       </div>
 
@@ -82,7 +82,7 @@ export default function AdminNotificacionesPage() {
         <Card className="border-slate-200">
           <CardHeader>
             <CardTitle className="text-base text-slate-900">
-              Componer notificacion
+              Componer notificación
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -170,7 +170,7 @@ export default function AdminNotificacionesPage() {
                 <div className="bg-blue-600 px-6 py-4">
                   <p className="text-white font-bold text-lg">BrickToken</p>
                   <p className="text-blue-200 text-xs uppercase tracking-wider">
-                    Inversion inmobiliaria tokenizada
+                    Inversión inmobiliaria tokenizada
                   </p>
                 </div>
                 {/* Simulated email body */}
@@ -179,13 +179,13 @@ export default function AdminNotificacionesPage() {
                     {subject || 'Asunto del email'}
                   </h2>
                   <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                    {message || 'El contenido del mensaje aparecera aqui...'}
+                    {message || 'El contenido del mensaje aparecerá acá...'}
                   </div>
                 </div>
                 {/* Simulated email footer */}
                 <div className="bg-slate-50 px-6 py-4 border-t border-slate-200">
                   <p className="text-xs text-slate-400">
-                    BrickToken — Inversion inmobiliaria tokenizada
+                    BrickToken — Inversión inmobiliaria tokenizada
                   </p>
                 </div>
               </div>

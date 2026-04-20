@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { isValidCI } from '@/lib/auth-errors'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -22,13 +23,38 @@ export async function GET(request: Request) {
 
         if (!investor) {
           const meta = user.user_metadata
+          const documentType = (meta?.document_type as string | undefined) || 'CI'
+          const rawDocumentNumber = (meta?.document_number as string | undefined) || ''
+
+          // Server-side CI validation (Uruguay). The client also validates,
+          // but never trust the wire — re-check here. If the CI is invalid
+          // we still create the investor with `pendiente` so the user can
+          // fix it from /dashboard/kyc; otherwise the magic-link flow would
+          // brick on a typo.
+          let documentNumber = 'pendiente'
+          if (rawDocumentNumber) {
+            if (documentType === 'CI') {
+              documentNumber = isValidCI(rawDocumentNumber)
+                ? rawDocumentNumber
+                : 'pendiente'
+              if (documentNumber === 'pendiente') {
+                console.warn(
+                  'Invalid Uruguayan CI received in auth callback for user',
+                  user.id
+                )
+              }
+            } else {
+              documentNumber = rawDocumentNumber
+            }
+          }
+
           const { error: insertError } = await supabase.from('investors').insert({
             id: user.id,
             email: user.email!,
             full_name: meta?.full_name || user.email!.split('@')[0],
             phone: meta?.phone || null,
-            document_type: meta?.document_type || 'CI',
-            document_number: meta?.document_number || 'pendiente',
+            document_type: documentType,
+            document_number: documentNumber,
           })
 
           if (insertError) {

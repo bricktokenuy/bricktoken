@@ -123,18 +123,18 @@ export default function ValuacionesPage() {
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              Administracion
+              Administración
             </p>
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Valuaciones</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Gestiona las revaluaciones de propiedades
+            Gestioná las revaluaciones de propiedades
           </p>
         </div>
         <Link href="/admin/valuaciones/nueva">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
             <Plus className="mr-2 h-4 w-4" />
-            Nueva valuacion
+            Nueva valuación
           </Button>
         </Link>
       </div>

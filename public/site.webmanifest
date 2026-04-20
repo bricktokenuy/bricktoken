@@ -1,0 +1,17 @@
+{
+  "name": "BrickToken — Inversión inmobiliaria tokenizada",
+  "short_name": "BrickToken",
+  "description": "Tokenizamos inmuebles uruguayos respaldados por fideicomisos bajo Ley 17.703.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0F1729",
+  "lang": "es-UY",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

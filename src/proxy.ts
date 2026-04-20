@@ -1,7 +1,10 @@
 import { type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
-export async function middleware(request: NextRequest) {
+// Next 16: file convention renamed from `middleware.ts` to `proxy.ts`
+// and the exported function from `middleware` to `proxy`. Public API is
+// otherwise identical (NextProxy = NextMiddleware).
+export async function proxy(request: NextRequest) {
   return await updateSession(request)
 }
 

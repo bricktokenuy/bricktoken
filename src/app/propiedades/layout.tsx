@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Propiedades',
+  title: 'Propiedades disponibles',
+  description:
+    'Explorá las propiedades uruguayas tokenizadas disponibles para invertir desde USD 50.',
 }
 
 export default function PropiedadesLayout({

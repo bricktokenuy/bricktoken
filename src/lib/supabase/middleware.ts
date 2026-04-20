@@ -3,11 +3,27 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 const ADMIN_EMAILS = ['bricktoken.uy@gmail.com']
 
+// Public browsing routes. Note: `/propiedades/[slug]/comprar` is intentionally
+// excluded below so it stays gated even though `/propiedades/...` is public.
 const PUBLIC_PATHS = ['/', '/propiedades', '/como-funciona', '/auth']
-const PROTECTED_PATHS = ['/dashboard', '/api/comprar']
+
+// Pages that require an authenticated session. Browser nav → 302 to /auth/login.
+// API endpoints are deliberately NOT listed here: they must answer with 401
+// JSON so fetch() in the client can react, instead of getting an opaque 307.
+const PROTECTED_PATHS = ['/dashboard']
 const ADMIN_PATHS = ['/admin', '/api/admin']
 
+// Special-case: `/propiedades/{slug}/comprar` is gated even though the
+// `/propiedades` namespace is otherwise public.
+const CHECKOUT_RE = /^\/propiedades\/[^/]+\/comprar(?:\/.*)?$/
+
+function isCheckoutRoute(pathname: string): boolean {
+  return CHECKOUT_RE.test(pathname)
+}
+
 function isPublicRoute(pathname: string): boolean {
+  // The checkout page lives under `/propiedades/...` but must stay protected.
+  if (isCheckoutRoute(pathname)) return false
   if (pathname === '/') return true
   return PUBLIC_PATHS.some(
     (path) => path !== '/' && (pathname === path || pathname.startsWith(path + '/'))
@@ -21,6 +37,7 @@ function isAdminRoute(pathname: string): boolean {
 }
 
 function isProtectedRoute(pathname: string): boolean {
+  if (isCheckoutRoute(pathname)) return true
   return PROTECTED_PATHS.some(
     (path) => pathname === path || pathname.startsWith(path + '/')
   )

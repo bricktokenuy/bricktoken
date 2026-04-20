@@ -3,11 +3,13 @@
 import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { CheckCircle2 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
+import { translateAuthError } from '@/lib/auth-errors'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -19,6 +21,7 @@ function LoginForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (loading) return // prevent double submit
     setLoading(true)
     setError('')
 
@@ -32,7 +35,7 @@ function LoginForm() {
 
     setLoading(false)
     if (error) {
-      setError(error.message)
+      setError(translateAuthError(error.message))
     } else {
       setSent(true)
     }
@@ -43,12 +46,17 @@ function LoginForm() {
       <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12 bg-slate-50">
         <Card className="w-full max-w-md border-slate-200 shadow-sm bg-white">
           <CardHeader className="text-center space-y-2">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-50">
+              <CheckCircle2 className="h-6 w-6 text-green-600" aria-hidden="true" />
+            </div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               Email enviado
             </p>
             <CardTitle className="text-2xl font-bold text-slate-900">Revisá tu email</CardTitle>
             <CardDescription className="text-slate-500">
-              Te enviamos un link de acceso a <strong>{email}</strong>. Hacé clic en el link para iniciar sesión.
+              Te enviamos un link de acceso a <strong>{email}</strong>. Revisá tu
+              bandeja de entrada (y la carpeta de spam) y hacé clic en el link
+              para iniciar sesión.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
@@ -78,25 +86,30 @@ function LoginForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} noValidate className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-slate-900">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
+                autoComplete="email"
+                inputMode="email"
                 placeholder="tu@email.com"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
                 className="border-slate-200 focus-visible:ring-blue-600"
               />
             </div>
             {error && (
-              <p className="text-sm text-red-600">{error}</p>
+              <p className="text-sm text-red-600" role="alert">{error}</p>
             )}
             <Button
               type="submit"
               disabled={loading}
+              aria-busy={loading}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
               {loading ? 'Enviando...' : 'Enviar link de acceso'}

@@ -126,7 +126,7 @@ export default function Rendimientos() {
       ) : yields.length === 0 ? (
         <Card className="border-slate-200 shadow-sm bg-white">
           <CardContent className="p-12 text-center text-slate-400">
-            Aun no has recibido rendimientos. Cuando se distribuyan ganancias de tus propiedades, aparecerán aqui.
+            Todavía no recibiste rendimientos. Cuando se distribuyan ganancias de tus propiedades, van a aparecer acá.
           </CardContent>
         </Card>
       ) : (

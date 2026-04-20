@@ -4,6 +4,10 @@
  * All text is in Spanish (es-UY).
  */
 
+// URL base para links en emails. En producción debe setearse NEXT_PUBLIC_APP_URL
+// al dominio definitivo (ej: https://bricktoken.uy). Fallback al deploy de preview.
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://bricktoken-beige.vercel.app'
+
 function layout(title: string, body: string): string {
   return `<!DOCTYPE html>
 <html lang="es">
@@ -24,7 +28,7 @@ function layout(title: string, body: string): string {
                 BrickToken
               </h1>
               <p style="margin:4px 0 0;color:#bfdbfe;font-size:12px;letter-spacing:1px;text-transform:uppercase;">
-                Inversion inmobiliaria tokenizada
+                Inversión inmobiliaria tokenizada
               </p>
             </td>
           </tr>
@@ -38,7 +42,7 @@ function layout(title: string, body: string): string {
           <tr>
             <td style="background-color:#f8fafc;padding:24px 32px;border-radius:0 0 12px 12px;border-top:1px solid #e2e8f0;">
               <p style="margin:0;color:#94a3b8;font-size:13px;line-height:1.6;">
-                BrickToken — Inversion inmobiliaria tokenizada<br />
+                BrickToken — Inversión inmobiliaria tokenizada<br />
                 Montevideo, Uruguay
               </p>
               <p style="margin:12px 0 0;color:#cbd5e1;font-size:12px;">
@@ -101,7 +105,7 @@ export function purchaseConfirmation(data: PurchaseConfirmationData): string {
       </tr>
     </table>
     <p style="margin:0;color:#475569;font-size:14px;line-height:1.6;">
-      Podes ver el detalle de tu inversion en tu <a href="https://bricktoken.uy/dashboard" style="color:#2563eb;text-decoration:underline;">panel de control</a>.
+      Podés ver el detalle de tu inversión en tu <a href="${APP_URL}/dashboard" style="color:#2563eb;text-decoration:underline;">panel de control</a>.
     </p>`
 
   return layout('Compra confirmada — BrickToken', body)
@@ -124,7 +128,7 @@ export function yieldDistribution(data: YieldDistributionData): string {
       Rendimiento distribuido
     </h2>
     <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">
-      Hola ${data.investorName}, se distribuyo el rendimiento correspondiente al periodo <strong>${data.period}</strong>.
+      Hola ${data.investorName}, se distribuyó el rendimiento correspondiente al período <strong>${data.period}</strong>.
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f8fafc;border-radius:8px;padding:20px;margin-bottom:20px;">
       <tr>
@@ -141,13 +145,13 @@ export function yieldDistribution(data: YieldDistributionData): string {
       </tr>
       <tr>
         <td style="padding:8px 16px;">
-          <p style="margin:0;color:#94a3b8;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Periodo</p>
+          <p style="margin:0;color:#94a3b8;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Período</p>
           <p style="margin:4px 0 0;color:#0f172a;font-size:15px;font-weight:600;">${data.period}</p>
         </td>
       </tr>
     </table>
     <p style="margin:0;color:#475569;font-size:14px;line-height:1.6;">
-      El monto fue acreditado en tu billetera. Revisa tu <a href="https://bricktoken.uy/dashboard" style="color:#2563eb;text-decoration:underline;">historial de transacciones</a> para mas detalle.
+      El monto fue acreditado en tu billetera. Revisá tu <a href="${APP_URL}/dashboard" style="color:#2563eb;text-decoration:underline;">historial de transacciones</a> para más detalle.
     </p>`
 
   return layout('Rendimiento distribuido — BrickToken', body)
@@ -171,11 +175,11 @@ export function kycApproved(data: KycApprovedData): string {
     </p>
     <div style="background-color:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:20px;margin-bottom:20px;text-align:center;">
       <p style="margin:0;color:#166534;font-size:16px;font-weight:600;">
-        &#10003; Verificacion completada
+        &#10003; Verificación completada
       </p>
     </div>
     <p style="margin:0;color:#475569;font-size:14px;line-height:1.6;">
-      Ya podes invertir en todas las propiedades disponibles en la plataforma. Explora las <a href="https://bricktoken.uy/propiedades" style="color:#2563eb;text-decoration:underline;">oportunidades de inversion</a>.
+      Ya podés invertir en todas las propiedades disponibles en la plataforma. Explorá las <a href="${APP_URL}/propiedades" style="color:#2563eb;text-decoration:underline;">oportunidades de inversión</a>.
     </p>`
 
   return layout('Identidad verificada — BrickToken', body)
@@ -197,22 +201,22 @@ export function kycRejected(data: KycRejectedData): string {
 
   const body = `
     <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;font-weight:600;">
-      Verificacion rechazada
+      Verificación rechazada
     </h2>
     <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">
       Hola ${data.investorName}, lamentablemente no pudimos verificar tu identidad.
     </p>
     <div style="background-color:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:20px;margin-bottom:20px;">
       <p style="margin:0;color:#991b1b;font-size:15px;font-weight:600;">
-        Verificacion no aprobada
+        Verificación no aprobada
       </p>
       ${reasonText}
     </div>
     <p style="margin:0;color:#475569;font-size:14px;line-height:1.6;">
-      Podes volver a intentar el proceso de verificacion o contactarnos a <a href="mailto:soporte@bricktoken.uy" style="color:#2563eb;text-decoration:underline;">soporte@bricktoken.uy</a> si crees que es un error.
+      Podés volver a intentar el proceso de verificación o contactarnos a <a href="mailto:soporte@bricktoken.uy" style="color:#2563eb;text-decoration:underline;">soporte@bricktoken.uy</a> si creés que es un error.
     </p>`
 
-  return layout('Verificacion rechazada — BrickToken', body)
+  return layout('Verificación rechazada — BrickToken', body)
 }
 
 // ---------------------------------------------------------------------------
@@ -232,31 +236,31 @@ export function welcomeEmail(data: WelcomeEmailData): string {
       Hola ${data.investorName}, gracias por unirte a BrickToken. Estamos encantados de tenerte.
     </p>
     <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">
-      Con BrickToken podes invertir en propiedades uruguayas desde USD 50, recibiendo rendimientos por alquiler de forma automatica.
+      Con BrickToken podés invertir en propiedades uruguayas desde USD 50, recibiendo rendimientos por alquiler de forma automática.
     </p>
-    <h3 style="margin:0 0 12px;color:#0f172a;font-size:16px;font-weight:600;">Proximos pasos:</h3>
+    <h3 style="margin:0 0 12px;color:#0f172a;font-size:16px;font-weight:600;">Próximos pasos:</h3>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
       <tr>
         <td style="padding:8px 0;">
           <span style="display:inline-block;width:28px;height:28px;background-color:#2563eb;color:#ffffff;border-radius:50%;text-align:center;line-height:28px;font-size:14px;font-weight:600;margin-right:12px;">1</span>
-          <span style="color:#0f172a;font-size:14px;">Completa la verificacion de identidad (KYC)</span>
+          <span style="color:#0f172a;font-size:14px;">Completá la verificación de identidad (KYC)</span>
         </td>
       </tr>
       <tr>
         <td style="padding:8px 0;">
           <span style="display:inline-block;width:28px;height:28px;background-color:#2563eb;color:#ffffff;border-radius:50%;text-align:center;line-height:28px;font-size:14px;font-weight:600;margin-right:12px;">2</span>
-          <span style="color:#0f172a;font-size:14px;">Explora las propiedades disponibles</span>
+          <span style="color:#0f172a;font-size:14px;">Explorá las propiedades disponibles</span>
         </td>
       </tr>
       <tr>
         <td style="padding:8px 0;">
           <span style="display:inline-block;width:28px;height:28px;background-color:#2563eb;color:#ffffff;border-radius:50%;text-align:center;line-height:28px;font-size:14px;font-weight:600;margin-right:12px;">3</span>
-          <span style="color:#0f172a;font-size:14px;">Adquiri tus primeros tokens y empeza a recibir rendimientos</span>
+          <span style="color:#0f172a;font-size:14px;">Adquirí tus primeros tokens y empezá a recibir rendimientos</span>
         </td>
       </tr>
     </table>
     <div style="text-align:center;margin-top:24px;">
-      <a href="https://bricktoken.uy/propiedades" style="display:inline-block;background-color:#2563eb;color:#ffffff;text-decoration:none;padding:12px 32px;border-radius:8px;font-size:15px;font-weight:600;">
+      <a href="${APP_URL}/propiedades" style="display:inline-block;background-color:#2563eb;color:#ffffff;text-decoration:none;padding:12px 32px;border-radius:8px;font-size:15px;font-weight:600;">
         Ver propiedades
       </a>
     </div>`
@@ -304,7 +308,7 @@ export function sellOrderFilled(data: SellOrderFilledData): string {
       </tr>
     </table>
     <p style="margin:0;color:#475569;font-size:14px;line-height:1.6;">
-      El monto fue acreditado en tu billetera. Revisa tu <a href="https://bricktoken.uy/dashboard" style="color:#2563eb;text-decoration:underline;">panel de control</a> para mas detalle.
+      El monto fue acreditado en tu billetera. Revisá tu <a href="${APP_URL}/dashboard" style="color:#2563eb;text-decoration:underline;">panel de control</a> para más detalle.
     </p>`
 
   return layout('Orden de venta completada — BrickToken', body)

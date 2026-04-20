@@ -33,15 +33,15 @@ function PagoExitoContent() {
             </h1>
             <p className="mt-2 text-slate-500">
               {isPending
-                ? 'Tu pago esta siendo procesado. Te notificaremos cuando se confirme.'
-                : 'Tu inversion ha sido registrada exitosamente. Los tokens fueron asignados a tu cuenta.'}
+                ? 'Tu pago está siendo procesado. Te notificaremos cuando se confirme.'
+                : 'Tu inversión fue registrada exitosamente. Los tokens fueron asignados a tu cuenta.'}
             </p>
           </div>
 
           {transactionId && (
             <div className="rounded-lg bg-slate-50 p-4">
               <p className="text-xs text-slate-400 mb-1">
-                ID de transaccion
+                ID de transacción
               </p>
               <p className="text-sm font-mono text-slate-700 break-all">
                 {transactionId}
@@ -67,7 +67,7 @@ function PagoExitoContent() {
                 'w-full border-slate-200 text-slate-600 hover:bg-slate-50'
               )}
             >
-              Explorar mas propiedades
+              Explorar más propiedades
             </Link>
           </div>
         </CardContent>

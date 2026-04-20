@@ -73,7 +73,7 @@ export default function AdminDashboard() {
             Dashboard
           </p>
           <h1 className="text-2xl font-bold text-slate-900">
-            Panel de administracion
+            Panel de administración
           </h1>
         </div>
         <div className="flex items-center gap-3">
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
                   Nombre
                 </TableHead>
                 <TableHead className="text-xs font-medium uppercase tracking-wider text-slate-400">
-                  Ubicacion
+                  Ubicación
                 </TableHead>
                 <TableHead className="text-xs font-medium uppercase tracking-wider text-slate-400">
                   Tipo

@@ -70,7 +70,7 @@ export default function KycPage() {
           setDocumentNumber(data.document_number || '')
         }
       } catch {
-        setError('Error al cargar datos de verificacion')
+        setError('Error al cargar datos de verificación')
       } finally {
         setLoading(false)
       }
@@ -90,7 +90,7 @@ export default function KycPage() {
       } = await supabase.auth.getUser()
 
       if (!user) {
-        setError('Sesion expirada')
+        setError('Sesión expirada')
         return
       }
 
@@ -101,7 +101,7 @@ export default function KycPage() {
       }
 
       if (!documentNumber.trim()) {
-        setError('El numero de documento es requerido')
+        setError('El número de documento es requerido')
         setSubmitting(false)
         return
       }
@@ -184,10 +184,10 @@ export default function KycPage() {
         <div className="container mx-auto max-w-2xl px-4 py-12 space-y-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-              Verificacion
+              Verificación
             </p>
             <h1 className="text-3xl font-bold text-slate-900">
-              Verificacion de identidad
+              Verificación de identidad
             </h1>
           </div>
 
@@ -203,7 +203,7 @@ export default function KycPage() {
                 Verificado
               </Badge>
               <p className="text-sm text-slate-500 text-center max-w-sm">
-                Tu cuenta esta verificada y podes realizar inversiones en la
+                Tu cuenta está verificada y ya podés realizar inversiones en la
                 plataforma.
               </p>
             </CardContent>
@@ -220,10 +220,10 @@ export default function KycPage() {
         <div className="container mx-auto max-w-2xl px-4 py-12 space-y-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-              Verificacion
+              Verificación
             </p>
             <h1 className="text-3xl font-bold text-slate-900">
-              Verificacion de identidad
+              Verificación de identidad
             </h1>
           </div>
 
@@ -233,15 +233,15 @@ export default function KycPage() {
                 <FileCheck className="h-12 w-12 text-yellow-600" />
               </div>
               <h2 className="text-xl font-semibold text-slate-900">
-                Tu verificacion esta en proceso
+                Tu verificación está en proceso
               </h2>
               <Badge className="bg-yellow-50 text-yellow-700 border-yellow-200">
-                En revision
+                En revisión
               </Badge>
               <p className="text-sm text-slate-500 text-center max-w-sm">
-                Tus documentos fueron enviados y estan siendo revisados por
+                Tus documentos fueron enviados y están siendo revisados por
                 nuestro equipo. Te notificaremos cuando se complete la
-                verificacion.
+                verificación.
               </p>
             </CardContent>
           </Card>
@@ -257,10 +257,10 @@ export default function KycPage() {
         <div className="container mx-auto max-w-2xl px-4 py-12 space-y-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-              Verificacion
+              Verificación
             </p>
             <h1 className="text-3xl font-bold text-slate-900">
-              Verificacion de identidad
+              Verificación de identidad
             </h1>
           </div>
 
@@ -273,11 +273,11 @@ export default function KycPage() {
                 Documentos enviados correctamente
               </h2>
               <Badge className="bg-yellow-50 text-yellow-700 border-yellow-200">
-                En revision
+                En revisión
               </Badge>
               <p className="text-sm text-slate-500 text-center max-w-sm">
                 Tus documentos fueron enviados exitosamente. Nuestro equipo los
-                revisara y te notificaremos el resultado.
+                revisará y te notificaremos el resultado.
               </p>
             </CardContent>
           </Card>
@@ -292,10 +292,10 @@ export default function KycPage() {
       <div className="container mx-auto max-w-2xl px-4 py-12 space-y-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-2">
-            Verificacion
+            Verificación
           </p>
           <h1 className="text-3xl font-bold text-slate-900">
-            Verificacion de identidad
+            Verificación de identidad
           </h1>
         </div>
 
@@ -304,10 +304,10 @@ export default function KycPage() {
             <XCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
             <div>
               <p className="font-medium text-red-800">
-                Tu verificacion fue rechazada
+                Tu verificación fue rechazada
               </p>
               <p className="text-sm text-red-600 mt-1">
-                Por favor, volve a enviar tus documentos asegurandote de que las
+                Por favor, volvé a enviar tus documentos asegurándote de que las
                 fotos sean claras y legibles.
               </p>
             </div>
@@ -321,7 +321,7 @@ export default function KycPage() {
               Documentos de identidad
             </CardTitle>
             <p className="text-sm text-slate-500">
-              Subi fotos de tu documento de identidad para verificar tu cuenta.
+              Subí fotos de tu documento de identidad para verificar tu cuenta.
             </p>
           </CardHeader>
           <CardContent>
@@ -346,7 +346,7 @@ export default function KycPage() {
                   }
                   className="flex h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
-                  <option value="CI">Cedula de Identidad (CI)</option>
+                  <option value="CI">Cédula de Identidad (CI)</option>
                   <option value="Pasaporte">Pasaporte</option>
                   <option value="DNI">DNI</option>
                 </select>
@@ -354,7 +354,7 @@ export default function KycPage() {
 
               {/* Document number */}
               <div className="space-y-2">
-                <Label htmlFor="document_number">Numero de documento</Label>
+                <Label htmlFor="document_number">Número de documento</Label>
                 <Input
                   id="document_number"
                   type="text"

@@ -13,11 +13,11 @@ export async function POST(request: NextRequest) {
   // Find the valuation
   const valuation = demoValuations.find((v) => v.id === valuation_id)
   if (!valuation) {
-    return NextResponse.json({ error: 'Valuacion no encontrada' }, { status: 404 })
+    return NextResponse.json({ error: 'Valuación no encontrada' }, { status: 404 })
   }
 
   if (valuation.status === 'applied') {
-    return NextResponse.json({ error: 'Esta valuacion ya fue aplicada' }, { status: 400 })
+    return NextResponse.json({ error: 'Esta valuación ya fue aplicada' }, { status: 400 })
   }
 
   // Find the property
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
   valuation.applied_at = new Date().toISOString()
 
   return NextResponse.json({
-    message: 'Valuacion aplicada exitosamente',
+    message: 'Valuación aplicada exitosamente',
     valuation,
     property: {
       id: property.id,

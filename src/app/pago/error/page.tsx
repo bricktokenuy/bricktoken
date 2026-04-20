@@ -25,7 +25,7 @@ function PagoErrorContent() {
               Error en el pago
             </h1>
             <p className="mt-2 text-slate-500">
-              No se pudo procesar tu pago. No se realizo ningun cobro. Podes
+              No se pudo procesar tu pago. No se realizó ningún cobro. Podés
               intentar nuevamente o elegir otra forma de pago.
             </p>
           </div>
@@ -33,7 +33,7 @@ function PagoErrorContent() {
           {transactionId && (
             <div className="rounded-lg bg-slate-50 p-4">
               <p className="text-xs text-slate-400 mb-1">
-                ID de transaccion
+                ID de transacción
               </p>
               <p className="text-sm font-mono text-slate-700 break-all">
                 {transactionId}
