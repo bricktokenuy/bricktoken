@@ -1,0 +1,20 @@
+# Mantiene despierto el proyecto Supabase del free tier (se pausa tras ~1 semana
+# sin actividad; el 2026-07-05 lo encontramos pausado y casi vence el plazo de
+# restauración). Dos pings semanales a rutas que consultan la DB real.
+name: keepalive
+
+on:
+  schedule:
+    # Lunes y jueves 09:00 UTC (06:00 UY)
+    - cron: '0 9 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping páginas que consultan Supabase
+        run: |
+          curl -fsS "https://bricktoken-beige.vercel.app/propiedades?keepalive=$(date +%s)" > /dev/null
+          curl -fsS "https://bricktoken-beige.vercel.app/api/marketplace" > /dev/null
+          echo "DB de BrickToken tocada — no se pausa."
