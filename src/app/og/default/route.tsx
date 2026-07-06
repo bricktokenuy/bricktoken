@@ -89,9 +89,12 @@ export async function GET() {
               lineHeight: 1.05,
               letterSpacing: -2,
               maxWidth: 1000,
+              display: 'flex',
             }}
           >
-            Tokenizamos <span style={{ color: GOLD }}>inmuebles</span>.
+            <span>{'Tokenizamos '}</span>
+            <span style={{ color: GOLD }}>inmuebles</span>
+            <span>.</span>
           </div>
           <div
             style={{
