@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 import { env } from './env'
 
 // ----- Types -----
@@ -111,37 +112,110 @@ export async function createPaymentPreference(
   }
 }
 
-/**
- * Verify a MercadoPago webhook request.
- * In mock mode, always returns true.
- */
-export function verifyPaymentWebhook(
-  body: string,
+/** Max age (seconds) accepted for a webhook timestamp, to bound replay. */
+const WEBHOOK_TS_TOLERANCE_SECONDS = 5 * 60
+
+export interface WebhookVerificationInput {
+  /** `data.id` query param of the notification URL (MercadoPago resource id). */
+  dataId: string | null
+  /** Value of the `x-request-id` request header. */
+  requestId: string | null
+  /** Value of the `x-signature` request header. */
   signature: string | null
-): boolean {
+}
+
+/**
+ * Verify a MercadoPago webhook request using the official x-signature scheme.
+ *
+ * MercadoPago sends `x-signature: ts=<unix-ts>,v1=<hex-hmac>`. The signed
+ * manifest is:
+ *
+ *   id:<data.id>;request-id:<x-request-id>;ts:<ts>;
+ *
+ * where each segment is included only when its value is present, `data.id` is
+ * lowercased when alphanumeric, and v1 is HMAC-SHA256(manifest, secret) as a
+ * lowercase hex digest. See MercadoPago webhooks docs, "Validate origin".
+ *
+ * In mock mode this always returns true. Outside mock mode, if the webhook
+ * secret is not configured we FAIL CLOSED (return false) — we never "pass
+ * anyway" on missing config.
+ */
+export function verifyPaymentWebhook(input: WebhookVerificationInput): boolean {
   if (env.mercadopago.isMockMode) {
     return true
   }
 
-  // MercadoPago sends x-signature header with ts and v1 parts
-  // Format: ts=<timestamp>,v1=<hash>
-  if (!signature || !env.mercadopago.webhookSecret) {
+  const secret = env.mercadopago.webhookSecret
+  if (!secret) {
+    // Real integration but no secret configured: reject and surface a config
+    // error so it is caught in deploy, rather than accepting forged webhooks.
+    console.error(
+      'MERCADOPAGO_WEBHOOK_SECRET is not set — rejecting webhook (fail closed).'
+    )
     return false
   }
 
-  // Basic verification: check that the signature header is present and well-formed
-  // For production, implement full HMAC verification per MP docs
-  const parts = signature.split(',')
-  const tsEntry = parts.find((p) => p.startsWith('ts='))
-  const v1Entry = parts.find((p) => p.startsWith('v1='))
-
-  if (!tsEntry || !v1Entry) {
+  const { dataId, requestId, signature } = input
+  if (!signature) {
     return false
   }
 
-  // In production, you would compute HMAC-SHA256 of the template string
-  // and compare it with v1. For now we trust the presence of both parts.
-  return true
+  // Parse `ts=<...>,v1=<...>` (order-independent, tolerant of spaces).
+  let ts: string | undefined
+  let v1: string | undefined
+  for (const part of signature.split(',')) {
+    const eq = part.indexOf('=')
+    if (eq === -1) continue
+    const key = part.slice(0, eq).trim()
+    const value = part.slice(eq + 1).trim()
+    if (key === 'ts') ts = value
+    else if (key === 'v1') v1 = value
+  }
+
+  if (!ts || !v1) {
+    return false
+  }
+
+  // Replay guard: reject stale timestamps.
+  const tsSeconds = Number(ts)
+  if (!Number.isFinite(tsSeconds)) {
+    return false
+  }
+  const nowSeconds = Date.now() / 1000
+  if (Math.abs(nowSeconds - tsSeconds) > WEBHOOK_TS_TOLERANCE_SECONDS) {
+    console.error('MercadoPago webhook timestamp outside tolerance window.')
+    return false
+  }
+
+  // Build the manifest, omitting absent segments. data.id is lowercased when
+  // alphanumeric (MercadoPago rule).
+  const normalizedDataId =
+    dataId && /^[a-z0-9]+$/i.test(dataId) ? dataId.toLowerCase() : dataId
+
+  let manifest = ''
+  if (normalizedDataId) manifest += `id:${normalizedDataId};`
+  if (requestId) manifest += `request-id:${requestId};`
+  manifest += `ts:${ts};`
+
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(manifest)
+    .digest('hex')
+
+  // Timing-safe comparison. Guard against length mismatch (timingSafeEqual
+  // throws on differing lengths) and non-hex input.
+  const expectedBuf = Buffer.from(expected, 'hex')
+  let providedBuf: Buffer
+  try {
+    providedBuf = Buffer.from(v1, 'hex')
+  } catch {
+    return false
+  }
+  if (expectedBuf.length !== providedBuf.length || providedBuf.length === 0) {
+    return false
+  }
+
+  return crypto.timingSafeEqual(expectedBuf, providedBuf)
 }
 
 /**

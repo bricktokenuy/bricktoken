@@ -187,6 +187,65 @@ export async function POST(request: Request) {
 
     // In mock mode, also auto-approve the transaction and create holdings
     if (env.mercadopago.isMockMode) {
+      // Atomically reserve the tokens. This is the single source of truth for
+      // stock under concurrency — the earlier availability check is only a UX
+      // pre-filter and can be raced. If the RPC cannot reserve (sold out while
+      // this request was in flight), fail the transaction cleanly with 409.
+      const { data: reservation, error: reserveError } = await supabase
+        .rpc('reserve_property_tokens', {
+          p_property_id: property.id,
+          p_tokens: tokens,
+        })
+        .single<{
+          reserved: boolean
+          tokens_sold: number | null
+          total_tokens: number | null
+          tokens_available: number | null
+        }>()
+
+      if (reserveError || !reservation) {
+        console.error('Error reserving tokens (mock mode):', reserveError, {
+          transaction_id: transaction.id,
+          property_id: property.id,
+          tokens,
+        })
+        await supabase
+          .from('transactions')
+          .update({ status: 'failed' })
+          .eq('id', transaction.id)
+        await supabase
+          .from('payments')
+          .update({ status: 'rejected', updated_at: new Date().toISOString() })
+          .eq('transaction_id', transaction.id)
+        return NextResponse.json(
+          { error: 'Error al reservar los tokens.' },
+          { status: 500 }
+        )
+      }
+
+      if (!reservation.reserved) {
+        // Sold out under concurrency. Roll back the pending records.
+        await supabase
+          .from('transactions')
+          .update({ status: 'failed' })
+          .eq('id', transaction.id)
+        await supabase
+          .from('payments')
+          .update({ status: 'rejected', updated_at: new Date().toISOString() })
+          .eq('transaction_id', transaction.id)
+        const available = reservation.tokens_available ?? 0
+        return NextResponse.json(
+          {
+            error:
+              available > 0
+                ? `Solo quedan ${available} tokens disponibles.`
+                : 'No quedan tokens disponibles para esta propiedad.',
+          },
+          { status: 409 }
+        )
+      }
+
+      // Reservation succeeded (tokens_sold already incremented atomically).
       // Update transaction to confirmed
       await supabase
         .from('transactions')
@@ -201,12 +260,6 @@ export async function POST(request: Request) {
         purchase_price: property.token_price,
         status: 'active',
       })
-
-      // Update tokens_sold
-      await supabase
-        .from('properties')
-        .update({ tokens_sold: property.tokens_sold + tokens })
-        .eq('id', property.id)
 
       // Update payment to approved
       await supabase

@@ -12,9 +12,12 @@ export async function POST(request: Request) {
   try {
     const body = await request.text()
     const signature = request.headers.get('x-signature')
+    const requestId = request.headers.get('x-request-id')
+    // MercadoPago signs the `data.id` query param of the notification URL.
+    const dataId = new URL(request.url).searchParams.get('data.id')
 
-    // Verify webhook signature
-    if (!verifyPaymentWebhook(body, signature)) {
+    // Verify webhook signature (HMAC-SHA256 over the MercadoPago manifest).
+    if (!verifyPaymentWebhook({ dataId, requestId, signature })) {
       console.error('Invalid webhook signature')
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
     }
@@ -100,6 +103,56 @@ export async function POST(request: Request) {
         .single()
 
       if (transaction) {
+        // Atomically reserve the tokens before confirming. This is the single
+        // source of truth for stock under concurrency (two payments confirming
+        // at once can no longer oversell). The `.eq('status', 'pending')` filter
+        // above also makes this idempotent: a duplicate webhook delivery won't
+        // re-find a pending transaction and so won't reserve tokens twice.
+        const { data: reservation, error: reserveError } = await supabase
+          .rpc('reserve_property_tokens', {
+            p_property_id: transaction.property_id,
+            p_tokens: transaction.tokens,
+          })
+          .single<{
+            reserved: boolean
+            tokens_sold: number | null
+            total_tokens: number | null
+            tokens_available: number | null
+          }>()
+
+        if (reserveError || !reservation) {
+          console.error('Error reserving tokens (webhook):', reserveError, {
+            transaction_id: transactionId,
+            property_id: transaction.property_id,
+            tokens: transaction.tokens,
+          })
+          return NextResponse.json(
+            { error: 'Error reserving tokens' },
+            { status: 500 }
+          )
+        }
+
+        if (!reservation.reserved) {
+          // Payment approved but property is sold out. Do NOT create a holding.
+          // Flag the transaction so ops can reconcile / refund the payment.
+          console.error('Oversell prevented: paid order cannot be filled', {
+            transaction_id: transactionId,
+            property_id: transaction.property_id,
+            tokens: transaction.tokens,
+            tokens_available: reservation.tokens_available,
+          })
+          await supabase
+            .from('transactions')
+            .update({ status: 'failed' })
+            .eq('id', transactionId)
+          return NextResponse.json({
+            received: true,
+            status: paymentStatus.status,
+            oversell_blocked: true,
+          })
+        }
+
+        // Reservation succeeded (tokens_sold already incremented atomically).
         // Update transaction status to confirmed
         await supabase
           .from('transactions')
@@ -111,26 +164,9 @@ export async function POST(request: Request) {
           investor_id: transaction.investor_id,
           property_id: transaction.property_id,
           tokens: transaction.tokens,
-          purchase_price:
-            transaction.amount / transaction.tokens,
+          purchase_price: transaction.amount / transaction.tokens,
           status: 'active',
         })
-
-        // Update property tokens_sold
-        const { data: property } = await supabase
-          .from('properties')
-          .select('tokens_sold')
-          .eq('id', transaction.property_id)
-          .single()
-
-        if (property) {
-          await supabase
-            .from('properties')
-            .update({
-              tokens_sold: property.tokens_sold + transaction.tokens,
-            })
-            .eq('id', transaction.property_id)
-        }
       }
     } else if (
       paymentStatus.status === 'rejected' ||
